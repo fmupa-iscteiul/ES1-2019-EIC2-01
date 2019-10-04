@@ -6,5 +6,8 @@ public class Classe2 {
 		System.out.println("está tudo igual");
 		System.out.println("checkout");
 	}
-
+	
+	public void aaa() {
+		
+	}
 }
