@@ -4,6 +4,7 @@ public class Classe2 {
 		System.out.println("nova classe");
 		System.out.println("foi feito um novo branch");
 		System.out.println("está tudo igual");
+		System.out.println("checkout");
 	}
 
 }
