@@ -13,6 +13,7 @@ public class ClassTeste {
 		System.out.println("aahh");
 		System.out.println("algo");
 		System.out.println("Pois");
+		System.out.println("Pois claro");
 	}
 
 }
