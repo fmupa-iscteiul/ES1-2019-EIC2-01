@@ -7,5 +7,8 @@ public class Classe2 {
 		System.out.println("checkout");
 		System.out.println("segundo branch teste");
 	}
-
+	
+	public void aaa() {
+		
+	}
 }

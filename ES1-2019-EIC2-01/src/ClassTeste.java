@@ -14,7 +14,7 @@ public class ClassTeste {
 		System.out.println("algo");
 		System.out.println("Pois");
 		System.out.println("Pois claro");
-		System.out.println("Caralho que isto não dá");
+		System.out.println("isto não dá para fazer pussh");
 	}
 
 }
