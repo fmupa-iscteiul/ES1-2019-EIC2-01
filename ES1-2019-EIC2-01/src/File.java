@@ -53,7 +53,7 @@ public class File {
 //						removeAllLine();
 //						showFileInWindow(in);
 //					} catch (IOException e1) {
-						JOptionPane.showMessageDialog(panel, "problem in read file");
+//						JOptionPane.showMessageDialog(panel, "problem in read file");
 					}catch(NullPointerException e2)	{
 						JOptionPane.showMessageDialog(panel, "the file cannot open, please verify your excel file.");
 					}
