@@ -9,6 +9,15 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+/**
+ * @author Sene Conté
+ *
+ *	Window controla e exibe na sua janela os botões (tags) 
+ *	e os paineis associados a estes.
+ * 	Cada painel tem a sua propria extrutura.
+ * 	Tem um tamanho (por defeito) de 500*500 pixeis. 
+ */
+
 public class Window {
 	
 	 private JFrame frame;
@@ -24,13 +33,18 @@ public class Window {
 		INSTANCE = this;
 	}
 	
+	
+	/**
+	 * 
+	 * @return Acesso à instância Singleton do Window
+	 */
 	public static  Window getInstance() {
 		if(INSTANCE == null)
 			INSTANCE = new Window();
 		return INSTANCE;
 	}
 
-	 void init() {
+	private void init() {
 			frame = new JFrame();
 			panel = new JPanel();
 			tagPanel = new JPanel();
@@ -73,6 +87,10 @@ public class Window {
 		 this.panel.revalidate();
 	 }
 	 
+	 
+	 /**
+	  * Torne a janela visível
+	  */
 	 public void open() {
 		 init();
 		 frame.setSize(width, lenght);
@@ -80,6 +98,13 @@ public class Window {
 		 frame.setVisible(true);
 	 }
 	 
+	 /**
+	  * adiciona a janela mais um botão(Tag)
+	  * @param name
+	  * 		  nome do tag que irá ser mostrada na janela.	 
+	  * @param panel
+	  * 		  painel que irá ser aberto caso clicarem neste botão(Tag)
+	  */
 	 public void addTagPainel(String name,JPanel panel) {
 		 if(panel != null) 
 			 selectablePanels.put(name, panel);
