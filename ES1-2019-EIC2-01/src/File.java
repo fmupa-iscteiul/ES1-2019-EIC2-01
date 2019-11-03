@@ -23,55 +23,55 @@ public class File {
 	
 	private JPanel panel; 
 	private String panelName = "file"; 
-/*	private JTable jt;
-	private DefaultTableModel dtm;
-	private final  JFileChooser openFileChooser;
+//	private JTable jt;
+//	private DefaultTableModel dtm;
+//	private final  JFileChooser openFileChooser;
 	
 	public File() {
 		init();
-		openFileChooser = new JFileChooser();
-		openFileChooser.setFileFilter(new FileNameExtensionFilter("xlsx text", "xlsx"));
+//		openFileChooser = new JFileChooser();
+//		openFileChooser.setFileFilter(new FileNameExtensionFilter("xlsx text", "xlsx"));
 	}
 	
 	private void init() {
 		panel = new JPanel();
-		jt = new JTable();
-		dtm = new DefaultTableModel();
-		jt.setModel(dtm);
-		JScrollPane sp = new JScrollPane();
-		sp.setViewportView(jt);
+//		jt = new JTable();
+//		dtm = new DefaultTableModel();
+//		jt.setModel(dtm);
+//		JScrollPane sp = new JScrollPane();
+//		sp.setViewportView(jt);
 		
 		JButton search = new JButton("search");
 		search.addActionListener(new ActionListener() {	
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				int returnvalue = openFileChooser.showOpenDialog(panel);
-				if(returnvalue == JFileChooser.APPROVE_OPTION) {
+//				int returnvalue = openFileChooser.showOpenDialog(panel);
+//				if(returnvalue == JFileChooser.APPROVE_OPTION) {
 					try {
-						FileInputStream in = new FileInputStream(openFileChooser.getSelectedFile());
-						removeAllLine();
-						showFileInWindow(in);
-					} catch (IOException e1) {
+//						FileInputStream in = new FileInputStream(openFileChooser.getSelectedFile());
+//						removeAllLine();
+//						showFileInWindow(in);
+//					} catch (IOException e1) {
 						JOptionPane.showMessageDialog(panel, "problem in read file");
 					}catch(NullPointerException e2)	{
 						JOptionPane.showMessageDialog(panel, "the file cannot open, please verify your excel file.");
 					}
 				}
-				else {
-					JOptionPane.showMessageDialog(panel, "file not uploaded");
+//				else {
+//					JOptionPane.showMessageDialog(panel, "file not uploaded");
 					
-				}
+//				}
 				
-			}
+//			}
 		});
 		
 		panel.add(search);
-		panel.add(sp);
+//		panel.add(sp);
 		
 	}
 	
-	private void showFileInWindow(FileInputStream file) throws IOException {
+/*	private void showFileInWindow(FileInputStream file) throws IOException {
 		Workbook workbook = new XSSFWorkbook(file);
 		 org.apache.poi.ss.usermodel.Sheet firstSheet =  workbook.getSheetAt(0);
 		 dtm.setRowCount(firstSheet.getLastRowNum());
