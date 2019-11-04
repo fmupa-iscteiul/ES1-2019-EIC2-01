@@ -1,3 +1,5 @@
+import java.awt.BorderLayout;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -13,11 +15,11 @@ public class Criar_Regra {
 	private void init() {
 		panel = new JPanel();
 		
+		panel.setLayout(new BorderLayout(10,10));
 		
-		JButton ok = new JButton("ok");
+		JButton save = new JButton("save");
 		
-		
-		panel.add(ok);
+		panel.add(save, BorderLayout.SOUTH);
 		
 	}
 	
