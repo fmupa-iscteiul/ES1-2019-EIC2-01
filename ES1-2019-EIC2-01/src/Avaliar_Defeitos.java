@@ -16,14 +16,6 @@ public class Avaliar_Defeitos {
 		panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		
-		JTextField param = new JTextField("Parametro:");
-		param.setBounds(50,100, 200,30);
-		
-		JTextField area = new JTextField();
-		
-		panel.add(param, BorderLayout.NORTH);
-		panel.add(area, BorderLayout.CENTER);
-		
 	}
 	
 	/*return the panel name don´t touch */
