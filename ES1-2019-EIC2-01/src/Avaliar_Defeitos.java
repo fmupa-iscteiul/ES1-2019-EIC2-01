@@ -16,12 +16,12 @@ public class Avaliar_Defeitos {
 		panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		
-		JButton search = new JButton("search");
+		JTextField param = new JTextField("Parametro:");
+		param.setBounds(50,100, 200,30);
 		
 		JTextField area = new JTextField();
-		area.setSize(20, 400);
 		
-		panel.add(search,BorderLayout.SOUTH);
+		panel.add(param, BorderLayout.NORTH);
 		panel.add(area, BorderLayout.CENTER);
 		
 	}
