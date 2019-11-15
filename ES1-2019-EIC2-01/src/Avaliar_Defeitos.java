@@ -1,8 +1,10 @@
-import java.awt.BorderLayout;
+import java.awt.GridLayout;
 
-import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class Avaliar_Defeitos {
 
@@ -13,17 +15,43 @@ public class Avaliar_Defeitos {
 	}
 
 	private void init() {
+
+		
 		panel = new JPanel();
-		panel.setLayout(new BorderLayout());
+		GridLayout layout = new GridLayout(2,0);
+		panel.setLayout(layout);
+		JPanel panelUP = new JPanel();
+		JPanel panelDOWN = new JPanel();
 		
-		JButton search = new JButton("search");
 		
-		JTextField area = new JTextField();
-		area.setSize(20, 400);
+		 DefaultTableModel model = new DefaultTableModel();
+		   
 		
-		panel.add(search,BorderLayout.SOUTH);
-		panel.add(area, BorderLayout.CENTER);
+		String[] nomeColuna = {"Indicadores", "yo"};
 		
+		Object[][] indicadores = {
+			    {"DCI", " "},
+			    {"DII", " "},
+			    {"AII", " "},
+			    {"ACI", " "},
+		};
+		
+		//Tabela
+		JTable tabelaDefeitos = new JTable(indicadores, nomeColuna);
+
+		JLabel labelParametro = new JLabel("Parametro:");
+		
+		String[] lista_defeitos = {"is_long_method", "is_feature_envy"};
+		JComboBox boxDefeitos = new JComboBox(lista_defeitos);
+		
+		boxDefeitos.setSize(100, 100);;
+		panelUP.add(labelParametro);
+		panelUP.add(boxDefeitos);
+		panelDOWN.add(tabelaDefeitos);
+		
+		panel.add(panelUP);
+		panel.add(panelDOWN);
+
 	}
 	
 	/*return the panel name don´t touch */
