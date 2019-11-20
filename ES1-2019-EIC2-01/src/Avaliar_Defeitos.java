@@ -1,5 +1,6 @@
 import java.awt.GridLayout;
 
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,10 +25,10 @@ public class Avaliar_Defeitos {
 		JPanel panelDOWN = new JPanel();
 		
 		
-		 DefaultTableModel model = new DefaultTableModel();
+
 		   
 		
-		String[] nomeColuna = {"Indicadores", "yo"};
+		String[] nomeColuna = {"aaa", "aaaaa"};
 		
 		Object[][] indicadores = {
 			    {"DCI", " "},
@@ -38,16 +39,17 @@ public class Avaliar_Defeitos {
 		
 		//Tabela
 		JTable tabelaDefeitos = new JTable(indicadores, nomeColuna);
-
 		JLabel labelParametro = new JLabel("Parametro:");
 		
 		String[] lista_defeitos = {"is_long_method", "is_feature_envy"};
 		JComboBox boxDefeitos = new JComboBox(lista_defeitos);
+		JButton botaoComparar = new JButton("Comparar");
 		
 		boxDefeitos.setSize(100, 100);;
 		panelUP.add(labelParametro);
 		panelUP.add(boxDefeitos);
 		panelDOWN.add(tabelaDefeitos);
+		panelDOWN.add(botaoComparar);
 		
 		panel.add(panelUP);
 		panel.add(panelDOWN);
