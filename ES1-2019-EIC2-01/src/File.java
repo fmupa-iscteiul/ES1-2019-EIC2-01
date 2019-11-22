@@ -17,7 +17,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;  // experimentar HSSF em vez de XSSF
 
 public class File {
 	

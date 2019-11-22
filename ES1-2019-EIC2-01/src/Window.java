@@ -89,7 +89,7 @@ public class Window {
 	 
 	 
 	 /**
-	  * Torne a janela visível
+	  * Torna a janela visível
 	  */
 	 public void open() {
 		 init();
