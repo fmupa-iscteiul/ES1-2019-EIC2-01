@@ -1,6 +1,7 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.swing.JButton;
@@ -17,22 +18,20 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;  // experimentar HSSF em vez de XSSF
 
 public class File {
 	
 	private JPanel panel; 
 	private String panelName = "file"; 
-
+	private DefaultTableModel dtm;
+	private final  JFileChooser openFileChooser;
 	
 	public File() {
 		init();
+		openFileChooser = new JFileChooser();
+		openFileChooser.setFileFilter(new FileNameExtensionFilter("xlsx text", "xlsx"));
 
 	}
-
-	/**
-	 * iniciação do painel e botão para procurar ficheiro excel
-	 */
 	
 	private void init() {
 		panel = new JPanel();
@@ -42,14 +41,22 @@ public class File {
 		search.addActionListener(new ActionListener() {	
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				// TODO Auto-generated method stub
+				int returnvalue = openFileChooser.showOpenDialog(panel);
+				if(returnvalue == JFileChooser.APPROVE_OPTION) {
 					try {
-
-					}catch(NullPointerException e2)	{
+					FileInputStream in = new FileInputStream(openFileChooser.getSelectedFile());
+					
+					} catch(NullPointerException | FileNotFoundException e2)	{
 						JOptionPane.showMessageDialog(panel, "the file cannot open, please verify your excel file.");
 					}
 				}
-
+			else {
+				JOptionPane.showMessageDialog(panel, "file not uploaded");
+					
+			}
+				
+			}
 		});
 		
 		panel.add(search);
@@ -58,7 +65,6 @@ public class File {
 	}
 	
 
-	
 	/*return the panel name don´t touch */
 	public String getName() {
 		return panelName;
@@ -67,5 +73,4 @@ public class File {
 	public JPanel getPanel() {
 		return panel;
 	}
-
 }
