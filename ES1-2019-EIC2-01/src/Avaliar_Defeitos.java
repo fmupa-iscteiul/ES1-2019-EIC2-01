@@ -17,10 +17,6 @@ public class Avaliar_Defeitos {
 	public Avaliar_Defeitos() {
 		init();
 		file = App.file;
-		if(file == null)
-		{
-			showErrorMessage();
-		}
 	}
 
 	
