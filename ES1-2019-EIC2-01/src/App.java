@@ -1,13 +1,14 @@
-
-
+import java.io.File;
 
 public class App {
 	
+	public static File file;
+	
 	public App() {
-		File file = new File();
+		Leitura_Ficheiro Leitura_Ficheiro = new Leitura_Ficheiro();
 		Avaliar_Defeitos av = new Avaliar_Defeitos();
 		Criar_Regra c = new Criar_Regra();
-		Window.getInstance().addTagPainel(file.getName(), file.getPanel());
+		Window.getInstance().addTagPainel(Leitura_Ficheiro.getName(), Leitura_Ficheiro.getPanel());
 		Window.getInstance().addTagPainel(av.getName(), av.getPanel());
 		Window.getInstance().addTagPainel(c.getName(), c.getPanel());
 	}

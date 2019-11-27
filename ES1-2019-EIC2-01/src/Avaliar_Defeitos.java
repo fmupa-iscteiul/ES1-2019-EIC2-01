@@ -1,33 +1,45 @@
 import java.awt.GridLayout;
+import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 
 public class Avaliar_Defeitos {
 
 	private JPanel panel; 
 	private String panelName = "Avaliar_Defeitos"; 
+	private File file;
+	
 	public Avaliar_Defeitos() {
 		init();
+		file = App.file;
+		if(file == null)
+		{
+			showErrorMessage();
+		}
 	}
 
+	
+	
+	private void showErrorMessage(){
+		panel = new JPanel();
+		JOptionPane.showMessageDialog(panel,
+			    "Ficheiro não selecionado.",
+			    "Erro",
+			    JOptionPane.ERROR_MESSAGE);
+	}
+	
 	private void init() {
-
-		
 		panel = new JPanel();
 		GridLayout layout = new GridLayout(2,0);
 		panel.setLayout(layout);
 		JPanel panelUP = new JPanel();
 		JPanel panelDOWN = new JPanel();
-		
-		
-
-		   
-		
+				
 		String[] nomeColuna = {"aaa", "aaaaa"};
 		
 		Object[][] indicadores = {

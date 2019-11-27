@@ -19,14 +19,14 @@ import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
 
-public class File {
+public class Leitura_Ficheiro {
 	
 	private JPanel panel; 
 	private String panelName = "file"; 
 	private DefaultTableModel dtm;
 	private final  JFileChooser openFileChooser;
 	
-	public File() {
+	public Leitura_Ficheiro() {
 		init();
 		openFileChooser = new JFileChooser();
 		openFileChooser.setFileFilter(new FileNameExtensionFilter("xlsx text", "xlsx"));
