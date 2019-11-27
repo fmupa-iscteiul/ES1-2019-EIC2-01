@@ -2,7 +2,7 @@ import java.io.File;
 
 public class App {
 	
-	public static File file;
+	public static String path;
 	
 	public App() {
 		Leitura_Ficheiro Leitura_Ficheiro = new Leitura_Ficheiro();
