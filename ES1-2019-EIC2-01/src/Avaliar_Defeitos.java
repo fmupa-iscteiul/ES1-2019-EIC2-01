@@ -1,4 +1,6 @@
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.swing.JButton;
@@ -52,7 +54,18 @@ public class Avaliar_Defeitos {
 		String[] lista_defeitos = {"is_long_method", "is_feature_envy"};
 		JComboBox boxDefeitos = new JComboBox(lista_defeitos);
 		JButton botaoComparar = new JButton("Comparar");
-		
+
+		botaoComparar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+					if(path == null) {
+						showErrorMessage();
+						return;
+					}
+			}
+		});
 		boxDefeitos.setSize(100, 100);;
 		panelUP.add(labelParametro);
 		panelUP.add(boxDefeitos);
@@ -62,6 +75,14 @@ public class Avaliar_Defeitos {
 		panel.add(panelUP);
 		panel.add(panelDOWN);
 
+	}
+	
+	private void comparar(){
+		if(path == null){
+			showErrorMessage();
+			return;
+		}
+		
 	}
 	
 	/*return the panel name don´t touch */
