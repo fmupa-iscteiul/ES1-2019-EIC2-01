@@ -14,11 +14,11 @@ public class Avaliar_Defeitos {
 
 	private JPanel panel; 
 	private String panelName = "Avaliar_Defeitos"; 
-	private String path;
+	private File path;
 	
 	public Avaliar_Defeitos() {
 		init();
-		path = App.path;
+		path = App.file;
 	}
 
 	
