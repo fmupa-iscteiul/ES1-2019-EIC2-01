@@ -2,7 +2,8 @@ import java.io.File;
 
 public class App {
 	
-	public static String path;
+	public static File file;
+	
 	
 	public App() {
 		Leitura_Ficheiro Leitura_Ficheiro = new Leitura_Ficheiro();
@@ -22,4 +23,5 @@ public class App {
 		App app = new App();
 		app.start();
 		}
+	 
 }
