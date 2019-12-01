@@ -1,5 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -19,6 +21,7 @@ public class Criar_Regra {
 
 	private JPanel panel;
 	private JPanel input_panel;
+	private JPanel bottom_panel;
 
 	private String panelName = "Criar_Regra";
 
@@ -32,12 +35,24 @@ public class Criar_Regra {
 	private void init() {
 		panel = new JPanel();
 		input_panel = new JPanel();
-
+		bottom_panel = new JPanel();
+		
 		panel.setLayout(new BorderLayout(10,10));
 		input_panel.setLayout(new GridLayout(3,2));
-
+		bottom_panel.setLayout(new GridLayout(2,1));
+		
 		JButton save = new JButton("Save");
+		JButton load = new JButton("Load");
 
+		load.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				loadTheRules();
+				
+			}
+		});
+		
 		input = new JTextField("Input");
 		rule_name = new JTextField("Insert rule name");
 
@@ -45,7 +60,8 @@ public class Criar_Regra {
 		input_panel.add(input, BorderLayout.NORTH);
 
 		panel.add(input_panel,BorderLayout.NORTH);
-		panel.add(save, BorderLayout.SOUTH);
+		bottom_panel.add(save, BorderLayout.SOUTH);
+		bottom_panel.add(load, BorderLayout.SOUTH);
 		
 		String[] l = new String[] {"LOC", "CYCLO", "ATFD", "LAA"};
 		String[] l1 = new String[] {"<=", ">="};
@@ -70,7 +86,13 @@ public class Criar_Regra {
 		JComboBox<String> box5 = new JComboBox<String>(l2);
 		
 		panel.add(box5, BorderLayout.EAST);
+		panel.add(bottom_panel, BorderLayout.SOUTH);
+	}
 
+	protected void loadTheRules() {
+		
+		//TODO after possibility to save rules in the file
+		
 	}
 
 	/*return the panel name don´t touch */
