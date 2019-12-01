@@ -2,9 +2,11 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -23,7 +25,7 @@ public class Criar_Regra {
 	private JPanel input_panel;
 	private JPanel bottom_panel;
 
-	private String panelName = "Criar_Regra";
+	private String panelName = "Criar Regra";
 
 	private JTextField input;
 	private JTextField rule_name;
@@ -33,9 +35,10 @@ public class Criar_Regra {
 	}
 
 	private void init() {
-		panel = new JPanel();
-		input_panel = new JPanel();
-		bottom_panel = new JPanel();
+		
+		panel 			= new JPanel();
+		input_panel 	= new JPanel();
+		bottom_panel	= new JPanel();
 		
 		panel.setLayout(new BorderLayout(10,10));
 		input_panel.setLayout(new GridLayout(3,2));
@@ -43,6 +46,7 @@ public class Criar_Regra {
 		
 		JButton save = new JButton("Save");
 		JButton load = new JButton("Load");
+		JButton mais = new JButton("+");
 
 		load.addActionListener(new ActionListener() {
 			
@@ -53,45 +57,60 @@ public class Criar_Regra {
 			}
 		});
 		
-		input = new JTextField("Input");
-		rule_name = new JTextField("Insert rule name");
+		input 		= new JTextField("Input");
+		rule_name 	= new JTextField("Insert rule name");
 
 		input_panel.add(rule_name, BorderLayout.CENTER);
 		input_panel.add(input, BorderLayout.NORTH);
 
-		panel.add(input_panel,BorderLayout.NORTH);
 		bottom_panel.add(save, BorderLayout.SOUTH);
 		bottom_panel.add(load, BorderLayout.SOUTH);
 		
+		addBoxes();
+		
+		panel.add(mais, BorderLayout.WEST);
+		panel.add(input_panel, BorderLayout.CENTER);
+		panel.add(bottom_panel, BorderLayout.SOUTH);
+	}
+	
+	/**
+	 * Creates boxes that are used to create rules
+	 */
+	private void addBoxes() {
+		
 		String[] l = new String[] {"LOC", "CYCLO", "ATFD", "LAA"};
 		String[] l1 = new String[] {"<=", ">="};
+		String[] l2 = new String[] {"AND", "OR"};
 		
 		JComboBox<String> box1 = new JComboBox<String>(l);
 		JComboBox<String> box2 = new JComboBox<String>(l1);
 		JComboBox<String> box3 = new JComboBox<String>(l);
 		JComboBox<String> box4 = new JComboBox<String>(l1);
+		JComboBox<String> box5 = new JComboBox<String>(l2);
 		
 		input_panel.add(box1, BorderLayout.CENTER);
 		input_panel.add(box2, BorderLayout.CENTER);
 		input_panel.add(box3, BorderLayout.CENTER);
 		input_panel.add(box4, BorderLayout.CENTER);
-		panel.add(input_panel, BorderLayout.CENTER);
-		
-		JButton mais = new JButton("+");
-		
-		panel.add(mais, BorderLayout.WEST);
-		
-		String[] l2 = new String[] {"AND", "OR"};
-		
-		JComboBox<String> box5 = new JComboBox<String>(l2);
 		
 		panel.add(box5, BorderLayout.EAST);
-		panel.add(bottom_panel, BorderLayout.SOUTH);
+		
 	}
 
 	protected void loadTheRules() {
 		
 		//TODO after possibility to save rules in the file
+		JFileChooser jfc = new JFileChooser(".");
+
+		jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+		int returnValue = jfc.showOpenDialog(null);
+
+		if (returnValue == JFileChooser.APPROVE_OPTION) {
+
+			File selectedFile = jfc.getSelectedFile();
+
+		}
 		
 	}
 
