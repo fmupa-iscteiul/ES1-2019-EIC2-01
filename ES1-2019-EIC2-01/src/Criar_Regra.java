@@ -1,8 +1,17 @@
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -34,34 +43,37 @@ public class Criar_Regra {
 		input_panel = new JPanel();
 
 		panel.setLayout(new BorderLayout(10,10));
-		input_panel.setLayout(new GridLayout(3,2));
-
-		JButton save = new JButton("Save");
+		input_panel.setLayout(new GridLayout(1,3));
 
 		input = new JTextField("Input");
 		rule_name = new JTextField("Insert rule name");
 
-		input_panel.add(rule_name, BorderLayout.CENTER);
-		input_panel.add(input, BorderLayout.NORTH);
-
-		panel.add(input_panel,BorderLayout.NORTH);
-		panel.add(save, BorderLayout.SOUTH);
+		panel.add(rule_name,BorderLayout.NORTH);
 		
 		String[] l = new String[] {"LOC", "CYCLO", "ATFD", "LAA"};
 		String[] l1 = new String[] {"<=", ">="};
 		
 		JComboBox<String> box1 = new JComboBox<String>(l);
 		JComboBox<String> box2 = new JComboBox<String>(l1);
-		JComboBox<String> box3 = new JComboBox<String>(l);
-		JComboBox<String> box4 = new JComboBox<String>(l1);
 		
 		input_panel.add(box1, BorderLayout.CENTER);
 		input_panel.add(box2, BorderLayout.CENTER);
-		input_panel.add(box3, BorderLayout.CENTER);
-		input_panel.add(box4, BorderLayout.CENTER);
+		input_panel.add(input, BorderLayout.CENTER);
 		panel.add(input_panel, BorderLayout.CENTER);
 		
 		JButton mais = new JButton("+");
+		mais.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JComboBox<String> box3 = new JComboBox<String>(l);
+				JComboBox<String> box4 = new JComboBox<String>(l1);
+				input = new JTextField("Input");
+				input_panel.add(box3, BorderLayout.CENTER);
+				input_panel.add(box4, BorderLayout.CENTER);
+				input_panel.add(input, BorderLayout.CENTER);
+				panel.add(input_panel, BorderLayout.CENTER);
+			}
+		});
 		
 		panel.add(mais, BorderLayout.WEST);
 		
@@ -70,6 +82,51 @@ public class Criar_Regra {
 		JComboBox<String> box5 = new JComboBox<String>(l2);
 		
 		panel.add(box5, BorderLayout.EAST);
+		
+		JButton save = new JButton("Save");
+		save.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					//Scanner s = new Scanner(System.in);
+					File file = new File("regras.txt");
+					if(!file.exists()) {
+						file.createNewFile();
+					}
+					/*String s1 = rule_name.getText();
+					String s2 = (String) box1.getSelectedItem();
+					String s3 = (String) box2.getSelectedItem();
+					String s4 = (String) input.getSelectedText();
+					PrintWriter pw = new PrintWriter(file);
+					pw.println(s1 + " ("+s2 + " " + s3 + " " + s4+ ") ");
+					s.nextLine();
+					pw.close();
+					s.close();
+					JFileChooser fs = new JFileChooser(new File("c:\\"));
+					fs.setDialogTitle("Save File");
+					int result = fs.showSaveDialog(null);
+					if(result == JFileChooser.APPROVE_OPTION) {
+						String s1 = rule_name.getText();
+						String s2 = (String) box1.getSelectedItem();
+						String s3 = (String) box2.getSelectedItem();
+						File f = fs.getSelectedFile();
+						try {
+							FileWriter fw = new FileWriter(f.getPath());
+							fw.write(s1 + " ("+s2 + " " + s3 + " ) ");
+							fw.flush();
+							//String s3 = s.next();
+							fw.close();
+						} catch (Exception e1) {
+							JOptionPane.showMessageDialog(null, e1.getMessage());
+						}
+					}*/
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		panel.add(save, BorderLayout.SOUTH);
 
 	}
 
