@@ -23,8 +23,6 @@ import javax.swing.JTextField;
 
 /**
  * 
- * @author pedro
- * 
  * Criar_Regra é a interface para criar uma regra 
  * e definesse o conjunto de métricas que são dadas 
  * e compará-las
@@ -40,6 +38,11 @@ public class Criar_Regra {
 
 	private JTextField input;
 	private JTextField rule_name;
+	
+
+	private String[] l = new String[] {"LOC", "CYCLO", "ATFD", "LAA"};
+	private String[] l1 = new String[] {"<=", ">="};
+	private String[] l2 = new String[] {"AND", "OR"};
 
 	public Criar_Regra() {
 		init();
@@ -52,31 +55,40 @@ public class Criar_Regra {
 		bottom_panel	= new JPanel();
 		
 		panel.setLayout(new BorderLayout(10,10));
-
 		input_panel.setLayout(new GridLayout(1,3));
-
 		input_panel.setLayout(new GridLayout(3,2));
 		bottom_panel.setLayout(new GridLayout(2,1));
 		
 		JButton save = new JButton("Save");
 		JButton load = new JButton("Load");
 		JButton mais = new JButton("+");
-
+		
+		save.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				saveRules();
+			}
+		});
 
 		load.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				loadTheRules();
-				
+			}
+		});
+		
+		mais.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				moreBoxes();
 			}
 		});
 		
 		input 		= new JTextField("Input");
 		rule_name 	= new JTextField("Insert rule name");
-
-
-		panel.add(rule_name,BorderLayout.NORTH);
 
 		input_panel.add(rule_name, BorderLayout.CENTER);
 		input_panel.add(input, BorderLayout.NORTH);
@@ -91,98 +103,74 @@ public class Criar_Regra {
 		panel.add(bottom_panel, BorderLayout.SOUTH);
 	}
 	
+	protected void saveRules() {
+		try {
+			//Scanner s = new Scanner(System.in);
+			File file = new File("regras.txt");
+			if(!file.exists()) {
+				file.createNewFile();
+			}
+			/*String s1 = rule_name.getText();
+			String s2 = (String) box1.getSelectedItem();
+			String s3 = (String) box2.getSelectedItem();
+			String s4 = (String) input.getSelectedText();
+			PrintWriter pw = new PrintWriter(file);
+			pw.println(s1 + " ("+s2 + " " + s3 + " " + s4+ ") ");
+			s.nextLine();
+			pw.close();
+			s.close();
+			JFileChooser fs = new JFileChooser(new File("c:\\"));
+			fs.setDialogTitle("Save File");
+			int result = fs.showSaveDialog(null);
+			if(result == JFileChooser.APPROVE_OPTION) {
+				String s1 = rule_name.getText();
+				String s2 = (String) box1.getSelectedItem();
+				String s3 = (String) box2.getSelectedItem();
+				File f = fs.getSelectedFile();
+				try {
+					FileWriter fw = new FileWriter(f.getPath());
+					fw.write(s1 + " ("+s2 + " " + s3 + " ) ");
+					fw.flush();
+					//String s3 = s.next();
+					fw.close();
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+				}
+			}*/
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+
+	protected void moreBoxes() {
+		// TODO Auto-generated method stub
+		JComboBox<String> box3 = new JComboBox<String>(l);
+		JComboBox<String> box4 = new JComboBox<String>(l1);
+		input = new JTextField("Input");
+		input_panel.add(box3, BorderLayout.CENTER);
+		input_panel.add(box4, BorderLayout.CENTER);
+		input_panel.add(input, BorderLayout.CENTER);
+		panel.add(input_panel, BorderLayout.CENTER);
+	}
+
 	/**
 	 * Creates boxes that are used to create rules
 	 */
 	private void addBoxes() {
-
-		
-		String[] l = new String[] {"LOC", "CYCLO", "ATFD", "LAA"};
-		String[] l1 = new String[] {"<=", ">="};
-		String[] l2 = new String[] {"AND", "OR"};
 		
 		JComboBox<String> box1 = new JComboBox<String>(l);
 		JComboBox<String> box2 = new JComboBox<String>(l1);
-
-
 		JComboBox<String> box3 = new JComboBox<String>(l);
 		JComboBox<String> box4 = new JComboBox<String>(l1);
 		JComboBox<String> box5 = new JComboBox<String>(l2);
 
-		
 		input_panel.add(box1, BorderLayout.CENTER);
 		input_panel.add(box2, BorderLayout.CENTER);
-
-		input_panel.add(input, BorderLayout.CENTER);
-		panel.add(input_panel, BorderLayout.CENTER);
-		
-		JButton mais = new JButton("+");
-		mais.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JComboBox<String> box3 = new JComboBox<String>(l);
-				JComboBox<String> box4 = new JComboBox<String>(l1);
-				input = new JTextField("Input");
-				input_panel.add(box3, BorderLayout.CENTER);
-				input_panel.add(box4, BorderLayout.CENTER);
-				input_panel.add(input, BorderLayout.CENTER);
-				panel.add(input_panel, BorderLayout.CENTER);
-			}
-		});
-		
-		panel.add(mais, BorderLayout.WEST);
-		
 		input_panel.add(box3, BorderLayout.CENTER);
 		input_panel.add(box4, BorderLayout.CENTER);
-
 		
 		panel.add(box5, BorderLayout.EAST);
-		
-
-		JButton save = new JButton("Save");
-		save.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					//Scanner s = new Scanner(System.in);
-					File file = new File("regras.txt");
-					if(!file.exists()) {
-						file.createNewFile();
-					}
-					/*String s1 = rule_name.getText();
-					String s2 = (String) box1.getSelectedItem();
-					String s3 = (String) box2.getSelectedItem();
-					String s4 = (String) input.getSelectedText();
-					PrintWriter pw = new PrintWriter(file);
-					pw.println(s1 + " ("+s2 + " " + s3 + " " + s4+ ") ");
-					s.nextLine();
-					pw.close();
-					s.close();
-					JFileChooser fs = new JFileChooser(new File("c:\\"));
-					fs.setDialogTitle("Save File");
-					int result = fs.showSaveDialog(null);
-					if(result == JFileChooser.APPROVE_OPTION) {
-						String s1 = rule_name.getText();
-						String s2 = (String) box1.getSelectedItem();
-						String s3 = (String) box2.getSelectedItem();
-						File f = fs.getSelectedFile();
-						try {
-							FileWriter fw = new FileWriter(f.getPath());
-							fw.write(s1 + " ("+s2 + " " + s3 + " ) ");
-							fw.flush();
-							//String s3 = s.next();
-							fw.close();
-						} catch (Exception e1) {
-							JOptionPane.showMessageDialog(null, e1.getMessage());
-						}
-					}*/
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		});
-		panel.add(save, BorderLayout.SOUTH);
 
 	}
 
