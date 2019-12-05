@@ -3,10 +3,12 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 
@@ -43,6 +45,8 @@ public class Criar_Regra {
 	private String[] l = new String[] {"LOC", "CYCLO", "ATFD", "LAA"};
 	private String[] l1 = new String[] {"<=", ">="};
 	private String[] l2 = new String[] {"AND", "OR"};
+	private int times_button_was_clicked = 0;
+	private ResultSet rs;
 
 	public Criar_Regra() {
 		init();
@@ -55,19 +59,99 @@ public class Criar_Regra {
 		bottom_panel	= new JPanel();
 		
 		panel.setLayout(new BorderLayout(10,10));
-		input_panel.setLayout(new GridLayout(1,3));
-		input_panel.setLayout(new GridLayout(3,2));
+		input_panel.setLayout(new GridLayout(1,2));
 		bottom_panel.setLayout(new GridLayout(2,1));
 		
 		JButton save = new JButton("Save");
 		JButton load = new JButton("Load");
 		JButton mais = new JButton("+");
 		
+		input 		= new JTextField("Input");
+		rule_name 	= new JTextField("Insert rule name");
+		
+		//addBoxes();
+		JComboBox<String> box1 = new JComboBox<String>(l);
+		JComboBox<String> box2 = new JComboBox<String>(l1);
+		JComboBox<String> box5 = new JComboBox<String>(l2);
+
+		input_panel.add(box1, BorderLayout.CENTER);
+		input_panel.add(box2, BorderLayout.CENTER);
+		
+		panel.add(box5, BorderLayout.EAST);
+		
+		JComboBox<String> box3 = new JComboBox<String>(l);
+		JComboBox<String> box4 = new JComboBox<String>(l1);
+
+		panel.add(rule_name, BorderLayout.NORTH);
+		input_panel.add(input, BorderLayout.NORTH);
+
+		bottom_panel.add(save, BorderLayout.SOUTH);
+		bottom_panel.add(load, BorderLayout.SOUTH);
+		
+		panel.add(mais, BorderLayout.WEST);
+		panel.add(input_panel, BorderLayout.CENTER);
+		panel.add(bottom_panel, BorderLayout.SOUTH);
+		
+		mais.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//moreBoxes();
+				if(times_button_was_clicked < 1) {
+					JComboBox<String> box3 = new JComboBox<String>(l);
+					JComboBox<String> box4 = new JComboBox<String>(l1);
+					input = new JTextField("Input");
+					input_panel.add(box3, BorderLayout.CENTER);
+					input_panel.add(box4, BorderLayout.CENTER);
+					input_panel.add(input, BorderLayout.CENTER);
+					panel.add(input_panel, BorderLayout.CENTER);
+					times_button_was_clicked++;
+				}
+				panel.updateUI();
+			} 
+		});
+		
 		save.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				saveRules();
+				//saveRules();
+				try {
+					File file = new File("regras.txt");
+					if(!file.exists()) {
+						file.createNewFile();
+					}
+					if(!mais.getModel().isSelected()) {
+						String s1 = rule_name.getText();
+						String s2 = (String) box1.getSelectedItem();
+						String s3 = (String) box2.getSelectedItem();
+						String s4 = (String) input.getSelectedText();
+						//int news4 = Integer.parseInt(s4);
+						if(s2 != null && s3 != null && s4 != null) {
+							PrintWriter pw = new PrintWriter(new FileOutputStream(file, true));
+							pw.println(s1 + " ( " +s2 + " " + s3 + " " + s4+ " ) ");
+							pw.close();
+						}
+					} else {
+						String s1 = rule_name.getText();
+						String s2 = (String) box1.getSelectedItem();
+						String s3 = (String) box2.getSelectedItem();
+						String s4 = (String) input.getSelectedText();
+						//int news4 = Integer.parseInt(s4);
+						String s5 = (String) box5.getSelectedItem();
+						String s6 = (String) box3.getSelectedItem();
+						String s7 = (String) box4.getSelectedItem();
+						String s8 = (String) input.getSelectedText();
+						if(s2 != null && s3 != null && s4 != null && s5 != null && s6 != null && s7 != null && s8 != null) {
+							PrintWriter pw = new PrintWriter(new FileOutputStream(file, true));
+							pw.println(s1 + " ( " +s2 + " " + s3 + " " + s4+ " ) " + s5 + " ( " +s6 + " " + s7 + " " + s8 + " ) ");
+							pw.close();
+						}
+					}
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 
@@ -78,48 +162,42 @@ public class Criar_Regra {
 				loadTheRules();
 			}
 		});
-		
-		mais.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				moreBoxes();
-			}
-		});
-		
-		input 		= new JTextField("Input");
-		rule_name 	= new JTextField("Insert rule name");
-
-		input_panel.add(rule_name, BorderLayout.CENTER);
-		input_panel.add(input, BorderLayout.NORTH);
-
-		bottom_panel.add(save, BorderLayout.SOUTH);
-		bottom_panel.add(load, BorderLayout.SOUTH);
-		
-		addBoxes();
-		
-		panel.add(mais, BorderLayout.WEST);
-		panel.add(input_panel, BorderLayout.CENTER);
-		panel.add(bottom_panel, BorderLayout.SOUTH);
 	}
 	
-	protected void saveRules() {
+	/*protected void saveRules() {
 		try {
 			//Scanner s = new Scanner(System.in);
 			File file = new File("regras.txt");
 			if(!file.exists()) {
 				file.createNewFile();
 			}
-			/*String s1 = rule_name.getText();
-			String s2 = (String) box1.getSelectedItem();
-			String s3 = (String) box2.getSelectedItem();
-			String s4 = (String) input.getSelectedText();
-			PrintWriter pw = new PrintWriter(file);
-			pw.println(s1 + " ("+s2 + " " + s3 + " " + s4+ ") ");
-			s.nextLine();
-			pw.close();
-			s.close();
-			JFileChooser fs = new JFileChooser(new File("c:\\"));
+			//if(mais.getModel().isEnabled()) {
+				//String s1 = rule_name.getText();
+				//String s2 = (String) box1.getSelectedItem();
+				//String s3 = (String) box2.getSelectedItem();
+				//String s4 = (String) input.getSelectedText();
+				//String s5 = (String) box1.getSelectedItem();
+				//String s6 = (String) box2.getSelectedItem();
+				//String s7 = (String) input.getSelectedText();
+				//PrintWriter pw = new PrintWriter(file);
+				//pw.println(s1);
+				//s.nextLine();
+				//pw.close();
+				//s.close();
+			//} else {
+				String s1 = rule_name.getText();
+				//String s2 = (String) box1.getSelectedItem();
+				//String s3 = (String) box2.getSelectedItem();
+				//String s4 = (String) input.getSelectedText();
+				//int news4 = Integer.parseInt(s4);
+				PrintWriter pw = new PrintWriter(new FileOutputStream(file, true));
+				pw.println(s1);
+				//String line = s.nextLine();
+				//line = line.toLowerCase();
+				pw.close();
+				//s.close();
+			//}
+			/*JFileChooser fs = new JFileChooser(new File("c:\\"));
 			fs.setDialogTitle("Save File");
 			int result = fs.showSaveDialog(null);
 			if(result == JFileChooser.APPROVE_OPTION) {
@@ -136,43 +214,54 @@ public class Criar_Regra {
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
 				}
-			}*/
+			}
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-	}
+	}*/
 
-	protected void moreBoxes() {
+	/*protected void moreBoxes() {
 		// TODO Auto-generated method stub
-		JComboBox<String> box3 = new JComboBox<String>(l);
-		JComboBox<String> box4 = new JComboBox<String>(l1);
-		input = new JTextField("Input");
-		input_panel.add(box3, BorderLayout.CENTER);
-		input_panel.add(box4, BorderLayout.CENTER);
-		input_panel.add(input, BorderLayout.CENTER);
-		panel.add(input_panel, BorderLayout.CENTER);
-	}
+		if(times_button_was_clicked < 1) {
+			JComboBox<String> box3 = new JComboBox<String>(l);
+			JComboBox<String> box4 = new JComboBox<String>(l1);
+			input = new JTextField("Input");
+			input_panel.add(box3, BorderLayout.CENTER);
+			input_panel.add(box4, BorderLayout.CENTER);
+			input_panel.add(input, BorderLayout.CENTER);
+			panel.add(input_panel, BorderLayout.CENTER);
+			/*String s3 = (String) box3.getSelectedItem();
+			String s4 = (String) box4.getSelectedItem();
+			String s5 = (String) input.getText();
+			int news5 = Integer.parseInt(s5);
+			try {
+				rs.updateString("update combo box 3",s3);
+				rs.updateString("update combo box 4",s4); 
+				rs.updateInt("update input",news5);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			times_button_was_clicked++;
+		}
+	}*/
 
 	/**
 	 * Creates boxes that are used to create rules
 	 */
-	private void addBoxes() {
+	/*private void addBoxes() {
 		
 		JComboBox<String> box1 = new JComboBox<String>(l);
 		JComboBox<String> box2 = new JComboBox<String>(l1);
-		JComboBox<String> box3 = new JComboBox<String>(l);
-		JComboBox<String> box4 = new JComboBox<String>(l1);
 		JComboBox<String> box5 = new JComboBox<String>(l2);
 
 		input_panel.add(box1, BorderLayout.CENTER);
 		input_panel.add(box2, BorderLayout.CENTER);
-		input_panel.add(box3, BorderLayout.CENTER);
-		input_panel.add(box4, BorderLayout.CENTER);
 		
 		panel.add(box5, BorderLayout.EAST);
 
-	}
+	}*/
 
 	protected void loadTheRules() {
 		
