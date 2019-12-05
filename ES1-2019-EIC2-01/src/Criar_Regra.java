@@ -141,6 +141,7 @@ public class Criar_Regra {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		
 	}
 
 	protected void moreBoxes() {
@@ -178,15 +179,15 @@ public class Criar_Regra {
 	protected void loadTheRules() {
 		
 		//TODO after possibility to save rules in the file
-		JFileChooser jfc = new JFileChooser(".");
+		JFileChooser file = new JFileChooser(".");
 
-		jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		file.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
-		int returnValue = jfc.showOpenDialog(null);
+		int returnValue = file.showOpenDialog(null);
 
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
 
-			File selectedFile = jfc.getSelectedFile();
+			File selectedFile = file.getSelectedFile();
 
 		}
 		

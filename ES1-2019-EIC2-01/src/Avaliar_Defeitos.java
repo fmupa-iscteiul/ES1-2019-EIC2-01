@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -186,6 +188,7 @@ public class Avaliar_Defeitos {
 	private JPanel panel; 
 	private String panelName = "Avaliar_Defeitos"; 
 	private File path;
+	private List<Regra> lista_regras;
 	
 	public Avaliar_Defeitos() {
 		init();
@@ -222,6 +225,7 @@ public class Avaliar_Defeitos {
 		JTable tabelaDefeitos = new JTable(indicadores, nomeColuna);
 		JLabel labelParametro = new JLabel("Parametro:");
 		
+		lista_regras = new LinkedList<Regra>();
 		String[] lista_defeitos = {"is_long_method", "is_feature_envy"};
 		JComboBox boxDefeitos = new JComboBox(lista_defeitos);
 		JButton botaoComparar = new JButton("Comparar");
@@ -264,6 +268,10 @@ public class Avaliar_Defeitos {
 	/*return the panel  don´t touch */
 	public JPanel getPanel() {
 		return panel;
+	}
+
+	public void addRegra(Regra regra) {
+		lista_regras.add(regra);
 	}
 }
 
