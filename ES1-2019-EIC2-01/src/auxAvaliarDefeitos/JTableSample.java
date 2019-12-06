@@ -17,6 +17,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
+import projetoES1.Regra;
+
 public class JTableSample {
 	private JFrame mainFrame;
 	private JTable table;
