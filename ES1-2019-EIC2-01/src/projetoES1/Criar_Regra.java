@@ -58,12 +58,14 @@ public class Criar_Regra {
 	}
 
 	private void init() {
+		regras_carregadas = new LinkedList<Regra>();
+
+		loadRulesOnStart();
 		
 		panel 			= new JPanel();
 		input_panel 	= new JPanel();
 		bottom_panel	= new JPanel();
 		
-		regras_carregadas = new LinkedList<Regra>();
 		
 		panel.setLayout(new BorderLayout(10,10));
 		input_panel.setLayout(new GridLayout(1,2));
@@ -113,7 +115,6 @@ public class Criar_Regra {
 		});
 	}
 	
-	//TODO fazer a verificação 
 	protected void saveRules() {
 		try {
 			File file = new File("regras.txt");
@@ -163,6 +164,22 @@ public class Criar_Regra {
 		
 	}
 
+	private void loadRulesOnStart() {
+		File file = new File("regras.txt");
+		if(!file.exists()) {
+			try {
+				System.out.println("Ficheiro com regras não encontrado");
+				file.createNewFile();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		}
+		else {
+			System.out.println("Ficheiro com regras encontrado");
+			readFile(file);
+		}
+	}
+	
 	protected void moreBoxes() {
 		// TODO Auto-generated method stub
 		mais_pressed = true;
@@ -214,8 +231,6 @@ public class Criar_Regra {
 			int line = 1;
 			while(scanner.hasNextLine()) {
 				String regra_raw = scanner.nextLine();
-				System.out.println(regra_raw);
-				
 				String[] regras_partes = regra_raw.split(",");
 				
 				String nome = regras_partes[0];
