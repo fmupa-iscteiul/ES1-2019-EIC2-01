@@ -73,7 +73,7 @@ public class Criar_Regra {
 		JButton load = new JButton("Load");
 		JButton mais = new JButton("+");
 		
-		input 		= new JTextField("Input");
+		input 		= new JTextField("Input a number");
 		rule_name 	= new JTextField("Insert rule name");
 		
 		addBoxes();
@@ -126,6 +126,7 @@ public class Criar_Regra {
 				String s3 = (String) box2.getSelectedItem();
 				String s4 = (String) input.getText();
 				int news4 = Integer.parseInt(s4);
+					
 				if(s2 != null && s3 != null && s4 != null) {
 					PrintWriter pw = new PrintWriter(new FileOutputStream(file, true));
 					pw.println(s1 + ", " +s2 + " " + s3 + " " + news4+ " ");
@@ -156,6 +157,9 @@ public class Criar_Regra {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(panel, "There is a string instead of a number! Please correct it.");
+		}
 		
 	}
 
@@ -165,7 +169,7 @@ public class Criar_Regra {
 		if(times_button_was_clicked < 1) {
 			box3 = new JComboBox<String>(l);
 			box4 = new JComboBox<String>(l1);
-			input2 = new JTextField("Input2");
+			input2 = new JTextField("Input a number");
 			input_panel.add(box3, BorderLayout.CENTER);
 			input_panel.add(box4, BorderLayout.CENTER);
 			input_panel.add(input2, BorderLayout.CENTER);
