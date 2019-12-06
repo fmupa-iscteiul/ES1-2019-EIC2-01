@@ -206,7 +206,7 @@ public class Criar_Regra {
 				String[] regras_partes = regra_raw.split(",");
 				
 				String nome = regras_partes[0];
-				String[] part2 = regras_partes[1].strip().split(" ");
+				String[] part2 = regras_partes[1].trim().split(" ");
 				if(part2.length == 3 || part2.length == 7) {
 					String box1 = part2[0];
 					String box2 = part2[1];
