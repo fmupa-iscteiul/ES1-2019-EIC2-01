@@ -1,6 +1,5 @@
 package auxAvaliarDefeitos;
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +21,7 @@ public class JTableSample {
 	private JFrame mainFrame;
 	private JTable table;
 
+	private ArrayList<Regra> listaRegras;
 	private TableColumnModel tableColumnModel;
 	private JPanel panel;
 	private String[] columnNamesArr;
