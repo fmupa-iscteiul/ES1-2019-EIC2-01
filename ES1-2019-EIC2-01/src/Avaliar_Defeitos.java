@@ -49,19 +49,11 @@ public class Avaliar_Defeitos {
 		JPanel panelUP = new JPanel();
 		JPanel panelDOWN = new JPanel();
 		
-		JTableSample jt = new JTableSample();
-				
-		String[] nomeColuna = {"aaa", "aaaaa"};
-		
-		Object[][] indicadores = {
-			    {"DCI", " "},
-			    {"DII", " "},
-			    {"AII", " "},
-			    {"ACI", " "},
-		};
-		
 		//Tabela
-		JTable tabelaDefeitos = new JTable(indicadores, nomeColuna);
+		JTableSample jt = new JTableSample();
+		
+		
+		//Texto antes de combobox com "is_long_method / is_feature_envy"
 		JLabel labelParametro = new JLabel("Parametro:");
 		
 		//lista_regras = new LinkedList<Regra>();
@@ -70,7 +62,6 @@ public class Avaliar_Defeitos {
 		JButton botaoComparar = new JButton("Comparar");
 
 		botaoComparar.addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
@@ -80,6 +71,7 @@ public class Avaliar_Defeitos {
 					}
 			}
 		});
+		
 		boxDefeitos.setSize(100, 100);;
 		panelUP.add(labelParametro);
 		panelUP.add(boxDefeitos);
