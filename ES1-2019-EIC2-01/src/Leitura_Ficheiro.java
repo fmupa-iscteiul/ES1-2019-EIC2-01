@@ -31,6 +31,12 @@ public class Leitura_Ficheiro {
 		openFileChooser = new JFileChooser();
 		openFileChooser.setFileFilter(new FileNameExtensionFilter("xlsx text", "xlsx"));
 	}
+	/**
+	 * Inicializa painel e botão search, 
+	 * contém funcionalidade de procura de ficheiro excel 
+	 * pelo o computador e mostra o mesmo na interface gráfica
+	 * ao pressionar botão file.
+	 */
 	
 	private void init() {
 		panel = new JPanel();
@@ -51,7 +57,6 @@ public class Leitura_Ficheiro {
 						FileInputStream in = new FileInputStream(openFileChooser.getSelectedFile());
 						removeAllLine();
 						showFileInWindow(in);
-						App.file= openFileChooser.getSelectedFile();
 					} catch (IOException e1) {
 						JOptionPane.showMessageDialog(panel, "problem in read file");
 					}catch(NullPointerException e2)	{
@@ -70,7 +75,11 @@ public class Leitura_Ficheiro {
 		panel.add(scrollPane);
 		
 	}
-	
+	/**
+	 *  Guarda as células do ficheiro excel numa tabela para inserir na JTable
+	 * @param file
+	 * @throws IOException
+	 */
 	private void showFileInWindow(FileInputStream file) throws IOException {
 		Workbook workbook = new XSSFWorkbook(file);
 		 org.apache.poi.ss.usermodel.Sheet firstSheet =  workbook.getSheetAt(0);
@@ -81,7 +90,14 @@ public class Leitura_Ficheiro {
 				modeloTabela.insertRow(i-1, getCells(nextRow));
 		 }
 		 workbook.close();
+		 App.file= openFileChooser.getSelectedFile();
 	}
+	/**
+	 * Retorna as células do ficheiro excel dado uma linha
+	 * @param row
+	 * @return
+	 * @throws NullPointerException
+	 */
 	
 	private String[] getCells(Row row)  throws NullPointerException{
 		DataFormatter dataformatter = new DataFormatter();
@@ -93,21 +109,22 @@ public class Leitura_Ficheiro {
 		 return result;
 	}
 	
+	/**
+	 * Apaga as linhas da tabela 
+	 */
 	private void removeAllLine() {
 		DefaultTableModel model = (DefaultTableModel) tabela.getModel();
 		for(int i =model.getRowCount() -1; i>= 0; i--)
 			model.removeRow(i);
 	}
 	
-	/*return the panel name don´t touch */
+	/**return the panel name don´t touch **/
 	public String getName() {
 		return panelName;
 	}
-	/*return the panel  don´t touch */
+	/**return the panel  don´t touch **/
 	public JPanel getPanel() {
 		return panel;
 	}
-	
-	
 
 }
