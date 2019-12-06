@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 import javax.swing.JButton;
@@ -46,7 +47,12 @@ public class Criar_Regra {
 	private JComboBox<String> box3;
 	private JComboBox<String> box4;
 	private JComboBox<String> box5; 
-
+	
+	/**
+	 * So para as regras que foram lidas a partir de um ficheiro
+	 */
+	private LinkedList<Regra> regras_carregadas;
+	
 	public Criar_Regra() {
 		init();
 	}
@@ -56,6 +62,8 @@ public class Criar_Regra {
 		panel 			= new JPanel();
 		input_panel 	= new JPanel();
 		bottom_panel	= new JPanel();
+		
+		regras_carregadas = new LinkedList<Regra>();
 		
 		panel.setLayout(new BorderLayout(10,10));
 		input_panel.setLayout(new GridLayout(1,2));
@@ -215,7 +223,7 @@ public class Criar_Regra {
 					
 					if(part2.length == 3) {
 						Regra regra = new Regra(nome, box1, box2, number);
-						//TODO add regra to dropdown menu
+						regras_carregadas.add(regra);
 					}
 					else if(part2.length == 7) {
 						String box4 = part2[3];
@@ -223,7 +231,7 @@ public class Criar_Regra {
 						String box6 = part2[5];
 						int number2  = Integer.parseInt(part2[6]);
 						Regra regra = new Regra(nome, box1, box2, box4, box5, box6, number, number2);
-						//TODO add regra to dropdown menu
+						regras_carregadas.add(regra);
 					}
 					line++;
 				}
@@ -273,4 +281,9 @@ public class Criar_Regra {
 		return input_panel;
 	}
 
+	public LinkedList<Regra> getRegras_carregadas() {
+		
+		return regras_carregadas;
+	}
+	
 }
