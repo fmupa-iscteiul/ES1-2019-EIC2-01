@@ -4,6 +4,9 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -14,12 +17,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
+import projetoES1.Criar_Regra;
 import projetoES1.Regra;
 
-public class JTableSample {
+public class JTableSample implements Observer {
 	private JFrame mainFrame;
 	private JTable table;
 
@@ -39,6 +44,7 @@ public class JTableSample {
 	private Vector rowDataDII = new Vector(4);
 	private Vector rowDataAII = new Vector(4);
 	private Vector rowDataACI = new Vector(4);
+	private JComboBox rulesBox;
 
 	public int counter = 1;
 
@@ -63,68 +69,31 @@ public class JTableSample {
 
 	public void initTable() {
 		mainFrame = new JFrame("JTableSample");
-
 		numOfColumns = 1;
-
-		columnNamesList = new ArrayList<String>();
-		columnNamesList.add("Indicadores");
-
-		data = new String[1][columnNamesList.size()];
-
-		columnNamesArr = new String[columnNamesList.size()];
-		for (int i = 0; i < columnNamesList.size(); i++) {
-			columnNamesArr[i] = columnNamesList.get(i);
-			data[0][i] = "";
-		}
-
-		defaultTableModel = new DefaultTableModel(data, columnNamesArr);
-
+		defaultTableModel = new DefaultTableModel();
 		table = new JTable(defaultTableModel);
-		tableColumnModel = table.getColumnModel();
-
-		for (int i = 0; i < columnNamesList.size(); i++) {
-			tableColumnModel.getColumn(i).setPreferredWidth(columnNamesList.get(i).length());
-		}
-		table.setPreferredScrollableViewportSize(table.getPreferredSize());
 		scrollPane = new JScrollPane(table);
 
-		rowDataDCI.add("DCI");
-		rowDataDII.add("DII");
-		rowDataAII.add("AII");
-		rowDataACI.add("ACI");
 
-		
-
-		defaultTableModel.addRow(rowDataDCI);
-		defaultTableModel.addRow(rowDataDII);
-		defaultTableModel.addRow(rowDataAII);
-		defaultTableModel.addRow(rowDataACI);
+		Vector indicatorNames = new Vector();
+		indicatorNames.add(null);
+		indicatorNames.add("DCI");
+		indicatorNames.add("DII");
+		indicatorNames.add("AII");
+		indicatorNames.add("ACI");
+		defaultTableModel.addColumn("Indicadores", indicatorNames);
 
 		table.validate();
-
-
 		panel = new JPanel();
-
 		newColumn = new JButton("AddColumn");
-
+		
 		newColumn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				rowDataDCI.add("oo");
-				rowDataDII.add("3");
-				rowDataAII.add("4");
-				rowDataACI.add("5");
-				System.out.println(rowDataDCI.size());
-				defaultTableModel.fireTableRowsUpdated(0, 4);
 				addTableColumn();
-				defaultTableModel.fireTableRowsUpdated(0, 4);
 			}
 		});
-
-
-
-		// rules.getList()
-		String[] listaRegras = { "Regra1" };
-		JComboBox rulesBox = new JComboBox(listaRegras);
+		
+		rulesBox = new JComboBox();
 
 		panel.add(rulesBox);
 		panel.add(newColumn);
@@ -155,14 +124,23 @@ public class JTableSample {
 	public void addTableColumn() {
 		if (numOfColumns <= MAX_NUM_COLUMNS) {
 			TableColumn colX = new TableColumn();
-			colX.setHeaderValue("col" + numOfColumns);
-			colX.setIdentifier("col" + numOfColumns);
-			defaultTableModel.addColumn(colX);
-			defaultTableModel.fireTableRowsUpdated(0, 4);
+			Regra regra = (Regra) rulesBox.getSelectedItem();
+			colX.setHeaderValue(regra.toString());
+			colX.setIdentifier(regra.toString());
+			Vector indicadores = getRuleIndicators(regra);
+			defaultTableModel.addColumn(regra.toString(), indicadores);
 			numOfColumns++;
 		}
 
-		panel.add(newColumn);
+	}
+	
+	public Vector getRuleIndicators(Regra regra){
+		Vector indicadores = new Vector();
+		//Deixa a primeira celula em branco
+		indicadores.add(null);
+		
+		
+		return indicadores;
 	}
 
 	public static void main(String[] args) {
@@ -173,6 +151,23 @@ public class JTableSample {
 				jts.open();;
 			}
 		});
+	}
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		if(arg0 instanceof Criar_Regra && arg1 instanceof Regra)
+		{
+			rulesBox.addItem((Regra)arg1);
+		}
+		
+	}
+
+	public void setRegras(LinkedList<Regra> regras) {
+		for(Regra r: regras)
+		{
+			rulesBox.addItem(r);
+		}
+		
 	}
 
 

@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.LinkedList;
+import java.util.Observable;
 import java.util.Scanner;
 
 import javax.swing.JButton;
@@ -25,7 +26,7 @@ import javax.swing.JTextField;
  * e compará-las
  *
  */
-public class Criar_Regra {
+public class Criar_Regra extends Observable{
 
 	private JPanel panel;
 	private JPanel input_panel;

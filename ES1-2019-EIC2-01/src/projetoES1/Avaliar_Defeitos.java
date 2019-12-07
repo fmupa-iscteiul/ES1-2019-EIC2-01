@@ -2,19 +2,18 @@ package projetoES1;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.LinkedList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTable;
 
-import com.graphbuilder.struc.LinkedList;
+
 
 import auxAvaliarDefeitos.JTableSample;
 
@@ -26,7 +25,8 @@ public class Avaliar_Defeitos {
 	private JPanel panel; 
 	private String panelName = "Avaliar_Defeitos"; 
 	private File path;
-	private List lista_regras;
+	private LinkedList<Regra> lista_regras;
+	private JTableSample jt;
 	
 	public Avaliar_Defeitos() {
 		init();
@@ -51,7 +51,7 @@ public class Avaliar_Defeitos {
 		JPanel panelDOWN = new JPanel();
 		
 		//Tabela
-		JTableSample jt = new JTableSample();
+		jt = new JTableSample();
 		
 		
 		//Texto antes de combobox com "is_long_method / is_feature_envy"
@@ -87,6 +87,11 @@ public class Avaliar_Defeitos {
 
 	}
 	
+	public JTableSample getJTableSample()
+	{
+		return jt;
+	}
+	
 	private void comparar(){
 		if(path == null){
 			showErrorMessage();
@@ -108,7 +113,9 @@ public class Avaliar_Defeitos {
 	/*public void addRegra(Regra regra) {
 		lista_regras.add(regra);
 	}*/
-	
+	public void setRegras(LinkedList<Regra> regras){
+		jt.setRegras(regras);
+	}
 	
 	
 	

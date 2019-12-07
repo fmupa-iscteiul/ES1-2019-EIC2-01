@@ -61,6 +61,11 @@ public class Regra {
 	public int getNumber2() {
 		return number2;
 	}
+
+	@Override
+	public String toString() {
+		return  nome;
+	}
 	
 	
 	

@@ -10,6 +10,8 @@ public class App {
 		Leitura_Ficheiro Leitura_Ficheiro = new Leitura_Ficheiro();
 		Avaliar_Defeitos av = new Avaliar_Defeitos();
 		Criar_Regra c = new Criar_Regra();
+		av.setRegras(c.getRegras_carregadas());
+		c.addObserver(av.getJTableSample());
 		Window.getInstance().addTagPainel(Leitura_Ficheiro.getName(), Leitura_Ficheiro.getPanel());
 		Window.getInstance().addTagPainel(av.getName(), av.getPanel());
 		Window.getInstance().addTagPainel(c.getName(), c.getPanel());
