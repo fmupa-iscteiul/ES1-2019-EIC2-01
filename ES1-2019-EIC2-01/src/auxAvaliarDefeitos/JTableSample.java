@@ -226,8 +226,30 @@ public class JTableSample implements Observer {
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
+		System.out.println("Updating");
+		System.out.println((arg0).toString());
 		if (arg0 instanceof Criar_Regra && arg1 instanceof Regra) {
 			rulesBox.addItem((Regra) arg1);
+		}
+		LinkedList<Regra> regras = ((Criar_Regra)arg0).getRegras_carregadas();
+		int rulesBox_size = rulesBox.getItemCount();
+		boolean found = false;
+		Regra rule_to_add = null;
+		for(Regra regra: regras) {
+			for(int index = 0; index < rulesBox_size; index++) {
+				if(rulesBox.getItemAt(index) == regra) {
+					System.out.println("I have found the same rule");
+					found = true;
+				}
+				else {
+					rule_to_add = regra;
+					found = false;
+				}
+			}
+		}
+
+		if(found == false && rule_to_add != null) {
+			rulesBox.addItem(rule_to_add);
 		}
 
 	}
