@@ -11,6 +11,7 @@ public class Regra {
 
 	private int number1;
 	private int number2;
+	private double number2LAA;
 
 	public Regra(String nome, String box1, String box2, int number1) {
 		this.nome = nome;
@@ -28,6 +29,17 @@ public class Regra {
 		this.box5 = box5;
 		this.number1 = number1;
 		this.number2 = number2;
+	}
+	
+	public Regra(String nome, String box1, String box2, String and_or, String box4, String box5, int number1, double number2) {
+		this.nome = nome;
+		this.box1 = box1;
+		this.box2 = box2;
+		this.and_or = and_or;
+		this.box4 = box4;
+		this.box5 = box5;
+		this.number1 = number1;
+		this.number2LAA = number2;
 	}
 
 	public String getNome() {
@@ -60,6 +72,10 @@ public class Regra {
 
 	public int getNumber2() {
 		return number2;
+	}
+	
+	public double getNumber2LAA(){
+		return number2LAA;
 	}
 
 	@Override

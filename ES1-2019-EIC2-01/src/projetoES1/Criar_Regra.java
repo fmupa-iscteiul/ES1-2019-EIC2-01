@@ -163,19 +163,29 @@ public class Criar_Regra extends Observable{
 				System.out.println("Save Rules");
 				String s1 = rule_name.getText();
 				String s2 = (String) box1.getSelectedItem();
-				String s3 = labelMaiorOuIgual1.getText();
+				String s3 = labelMaiorOuIgual2.getText();
 				String s4 = (String) input.getText();
 				int news4 = Integer.parseInt(s4);
 				String s5 = (String) box5.getSelectedItem();
 				String s6 = (String) box3.getSelectedItem();
-				String s7 = labelMaiorOuIgual2.getText();
+				String s7 = labelMaiorOuIgual1.getText();
 				String s8 = (String) input2.getText();
-				int news8 = Integer.parseInt(s8);
+				double news8 = Double.parseDouble(s8);
 				if(s2 != null && s3 != null && s4 != null && s5 != null && s6 != null && s7 != null && s8 != null) {
 					PrintWriter pw = new PrintWriter(new FileOutputStream(file, true));
 					pw.println(s1 + ", " +s2 + " " + s3 + " " + news4+ " " + s5 + " " +s6 + " " + s7 + " " + news8 + " ");
 					pw.close();
-					Regra regra = new Regra(s1,s2,s3,s5,s6,s7,news4,news8);
+					Regra regra;
+					if(Avaliar_Defeitos.getBoxDefeitos().getSelectedItem() == "is_long_method"){
+						regra = new Regra(s1,s2,s3,s5,s6,s7,news4,(int)news8);
+						setChanged();
+						notifyObservers(regra);
+					}
+					else{
+						regra = new Regra(s1,s2,s3,s5,s6,s7,news4, news8);
+						setChanged();
+						notifyObservers(regra);
+					}
 					regras_carregadas.add(regra);
 					//TODO add regra to dropdown menu
 				}
@@ -284,8 +294,14 @@ public class Criar_Regra extends Observable{
 						String box4 = part2[3];
 						String box5 = part2[4];
 						String box6 = part2[5];
-						int number2  = Integer.parseInt(part2[6]);
-						Regra regra = new Regra(nome, box1, box2, box4, box5, box6, number, number2);
+						Regra regra;
+						if(box4.equals("CYCLO")){
+							int number2  = Integer.parseInt(part2[6]);
+							regra = new Regra(nome, box1, box2, box4, box5, box6, number, number2);
+						}else{
+							double number2 = Double.parseDouble(part2[6]);
+							regra = new Regra(nome, box1, box2, box4, box5, box6, number, number2);
+						}
 						regras_carregadas.add(regra);
 					}
 					line++;

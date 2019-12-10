@@ -21,8 +21,10 @@ public class Avaliar_Defeitos {
 	private String panelName = "Avaliar_Defeitos";
 	private File path;
 	private LinkedList<Regra> lista_regras;
-	private JTableSample jt;
+	private static JTableSample[] jt;
 	private static JComboBox boxDefeitos;
+	private JPanel panelDOWN;
+	private JPanel panelUP;
 
 	public Avaliar_Defeitos() {
 		init();
@@ -38,11 +40,13 @@ public class Avaliar_Defeitos {
 		panel = new JPanel();
 		GridLayout layout = new GridLayout(2, 0);
 		panel.setLayout(layout);
-		JPanel panelUP = new JPanel();
-		JPanel panelDOWN = new JPanel();
+		panelUP = new JPanel();
+		panelDOWN = new JPanel();
 
 		// Tabela
-		jt = new JTableSample();
+		jt = new JTableSample[2];
+		jt[0] = new JTableSample();
+		jt[1] = new JTableSample();
 
 		// Texto antes de combobox com "is_long_method / is_feature_envy"
 		JLabel labelParametro = new JLabel("Parametro:");
@@ -50,35 +54,34 @@ public class Avaliar_Defeitos {
 		// lista_regras = new LinkedList<Regra>();
 		String[] lista_defeitos = { "is_long_method", "is_feature_envy" };
 		boxDefeitos = new JComboBox(lista_defeitos);
-		JButton botaoComparar = new JButton("Comparar");
 
-		botaoComparar.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				if (path == null) {
-					showErrorMessage();
-					return;
-				}
-			}
-		});
+		
 
 		boxDefeitos.setSize(100, 100);
-		;
+		
+		boxDefeitos.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				changeTable();
+			}
+
+			
+		});
+		
 		panelUP.add(labelParametro);
 		panelUP.add(boxDefeitos);
 		panelDOWN.setLayout(new BorderLayout());
-		panelDOWN.add(jt.getPanel(), BorderLayout.NORTH);
-		panelDOWN.add(jt.getScroll(), BorderLayout.CENTER);
-		panelDOWN.add(botaoComparar, BorderLayout.SOUTH);
+		panelDOWN.add(jt[0].getPanel(), BorderLayout.NORTH);
+		panelDOWN.add(jt[0].getScroll(), BorderLayout.CENTER);
 
 		panel.add(panelUP);
 		panel.add(panelDOWN);
 
 	}
 
-	public JTableSample getJTableSample() {
-		return jt;
+	public JTableSample getJTableSample(int index) {
+		return jt[index];
 	}
 
 	private void comparar() {
@@ -87,6 +90,21 @@ public class Avaliar_Defeitos {
 			return;
 		}
 
+	}
+	
+	private void changeTable() {
+		if(boxDefeitos.getSelectedItem() == "is_long_method"){
+			panelDOWN.removeAll();
+			panelDOWN.add(jt[0].getPanel(), BorderLayout.NORTH);
+			panelDOWN.add(jt[0].getScroll(), BorderLayout.CENTER);
+			panel.updateUI();
+		}else{
+			panelDOWN.removeAll();
+			panelDOWN.add(jt[1].getPanel(), BorderLayout.NORTH);
+			panelDOWN.add(jt[1].getScroll(), BorderLayout.CENTER);
+			panel.updateUI();
+		}
+		
 	}
 
 	// return the panel name don´t touch
@@ -103,11 +121,20 @@ public class Avaliar_Defeitos {
 	 * public void addRegra(Regra regra) { lista_regras.add(regra); }
 	 */
 	public void setRegras(LinkedList<Regra> regras) {
-		jt.setRegras(regras);
+		for(Regra r: regras){
+			if(r.getBox1().equals("LOC"))
+				jt[0].addRegraToComboBox(r);
+			else
+				jt[1].addRegraToComboBox(r);
+		}
 	}
 
 	public static JComboBox getBoxDefeitos() {
 		return boxDefeitos;
 	}
-
+	
+	public static JTableSample[] getJTables(){
+		return jt;
+	}
+	
 }
