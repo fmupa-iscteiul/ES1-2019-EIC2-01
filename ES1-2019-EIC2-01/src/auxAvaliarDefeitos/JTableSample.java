@@ -92,6 +92,7 @@ public class JTableSample implements Observer {
 	/**
 	 * inicializa a frame
 	 */
+/*
 	private void open() {
 		mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		mainFrame.add(scrollPane, BorderLayout.CENTER);
@@ -100,7 +101,7 @@ public class JTableSample implements Observer {
 		mainFrame.setLocation(150, 150);
 		mainFrame.setVisible(true);
 	}
-
+*/
 	/**
 	 * Caso seja a tabela do defeito is_long_method
 	 * adiciona os botoes PMD e iPlasma
@@ -459,7 +460,7 @@ public class JTableSample implements Observer {
 		return false;
 	}
 
-	public static void main(String[] args) {
+/*	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 
 			public void run() {
@@ -469,7 +470,7 @@ public class JTableSample implements Observer {
 			}
 		});
 	}
-
+*/
 	/**
 	 * fica à espera de regras criadas
 	 * se uma nova regra for criada adiciona à combobox da tabela correspondente

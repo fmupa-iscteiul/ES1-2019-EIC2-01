@@ -220,14 +220,14 @@ public class Criar_Regra extends Observable{
 		File file = new File("regras.txt");
 		if(!file.exists()) {
 			try {
-				System.out.println("Ficheiro com regras não encontrado");
+			//	System.out.println("Ficheiro com regras não encontrado");
 				file.createNewFile();
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
 		}
 		else {
-			System.out.println("Ficheiro com regras encontrado");
+		//	System.out.println("Ficheiro com regras encontrado");
 			readFile(file);
 		}
 	}

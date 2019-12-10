@@ -2,6 +2,8 @@ package JUnitTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Vector;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -59,5 +61,27 @@ class TestJTableSample {
 		Regra regra1 = new Regra("Regra1", "LOC", ">=", "AND","CYCLO" , ">=", 10, 20);
 		assertFalse(sample.getRuleEvaluation(regra1, 30, 40.0));
 	}
+	
+	@Test
+	final void testGetRuleIndicatorsa() {
+		Regra regra1 = new Regra("Regra1", "LOC", ">=", "AND","CYCLO" , ">=", 10, 20);
+		//Vector v = sample.getRuleIndicators(regra1);
+		assertEquals(null, sample.getRuleIndicators(regra1));
+		
+	}
+	
+	@Test
+	final void testComparaRealComRegra() {
+		Vector indicadores = new Vector();
+		// Deixa a primeira celula em branco
+		indicadores.add(null);
+		indicadores.add(0);
+		indicadores.add(0);
+		indicadores.add(0);
+		indicadores.add(0);
+		assertEquals(indicadores, sample.comparaRealComRegra(indicadores, true, false));
+	}
+	
+	
 
 }
