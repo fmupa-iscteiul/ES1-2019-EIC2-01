@@ -144,6 +144,10 @@ public class Criar_Regra extends Observable{
 		});
 	}
 	
+	/**
+	 * Este método permite criar um ficheiro na pasta do repositório se o ficheiro ainda não existir,
+	 * e com esse ficheiro vamos conseguir guardar as regras com as métricas dadas
+	 */
 	protected void saveRules() {
 		try {
 			File file = new File("regras.txt");
@@ -229,6 +233,9 @@ public class Criar_Regra extends Observable{
 		}
 	}
 	
+	/**
+	 * Este método permite adicionar mais combo boxes ao painel
+	 */
 	protected void moreBoxes() {
 		// TODO Auto-generated method stub
 		mais_pressed = true;
@@ -246,6 +253,12 @@ public class Criar_Regra extends Observable{
 		panel.updateUI();
 	}
 	
+	/**
+	 * Este método permite dizer se a string for igual ao LOC ele returna a métrica CYCLO 
+	 * e se não for igual returna métrica LAA 
+	 * @param string
+	 * @return
+	 */
 	public String filter(String string){
 		if(string.equals("LOC")){
 			return "CYCLO";
