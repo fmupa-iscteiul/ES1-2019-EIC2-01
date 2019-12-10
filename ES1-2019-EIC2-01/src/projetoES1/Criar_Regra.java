@@ -15,9 +15,11 @@ import java.util.Scanner;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 /**
  * 
@@ -37,9 +39,9 @@ public class Criar_Regra extends Observable{
 	private JTextField input;
 	private JTextField input2;
 	private JTextField rule_name;
-	private boolean mais_pressed = false;
+	private boolean mais_pressed = true;
 	
-	private String[] l = new String[] {"LOC", "CYCLO", "ATFD", "LAA"};
+	private String[] l = new String[] {"LOC", "ATFD"};
 	private String[] l1 = new String[] {"<=", ">="};
 	private String[] l2 = new String[] {"AND", "OR"};
 	private int times_button_was_clicked = 0;
@@ -48,6 +50,8 @@ public class Criar_Regra extends Observable{
 	private JComboBox<String> box3;
 	private JComboBox<String> box4;
 	private JComboBox<String> box5; 
+	private JLabel labelMaiorOuIgual1;
+	private JLabel labelMaiorOuIgual2;
 	
 	/**
 	 * So para as regras que foram lidas a partir de um ficheiro
@@ -74,7 +78,7 @@ public class Criar_Regra extends Observable{
 		
 		JButton save = new JButton("Save");
 		JButton load = new JButton("Load");
-		JButton mais = new JButton("+");
+
 		
 		input 		= new JTextField("Input a number");
 		rule_name 	= new JTextField("Insert rule name");
@@ -87,17 +91,20 @@ public class Criar_Regra extends Observable{
 		bottom_panel.add(save, BorderLayout.SOUTH);
 		bottom_panel.add(load, BorderLayout.SOUTH);
 		
-		panel.add(mais, BorderLayout.WEST);
+
 		panel.add(input_panel, BorderLayout.CENTER);
 		panel.add(bottom_panel, BorderLayout.SOUTH);
 		
-		mais.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				moreBoxes();
-			} 
-		});
+		box3 = new JComboBox<String>();
+		box3.addItem(filter((String)box1.getSelectedItem()));
+		labelMaiorOuIgual1 = new JLabel(">=", SwingConstants.CENTER);
+		input2 = new JTextField("Input a number");
+		input_panel.add(box3, BorderLayout.CENTER);
+		input_panel.add(labelMaiorOuIgual1, BorderLayout.CENTER);
+		input_panel.add(input2, BorderLayout.CENTER);
+		panel.add(input_panel, BorderLayout.CENTER);
+		
+		
 		
 		save.addActionListener(new ActionListener() {
 		
@@ -112,6 +119,22 @@ public class Criar_Regra extends Observable{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				loadTheRules();
+			}
+		});
+		
+		box1.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e){
+				Object o = box1.getSelectedItem();
+				box3.removeAllItems();
+				box3.addItem(filter((String)box1.getSelectedItem()));
+				if(((String)box1.getSelectedItem()).equals("ATFD")){
+					labelMaiorOuIgual1.setText("<=");
+				}else{
+					labelMaiorOuIgual1.setText(">=");
+				}
+				
 			}
 		});
 	}
@@ -137,14 +160,15 @@ public class Criar_Regra extends Observable{
 					//TODO add regra to dropdown menu
 				}
 			} else {
+				System.out.println("Save Rules");
 				String s1 = rule_name.getText();
 				String s2 = (String) box1.getSelectedItem();
-				String s3 = (String) box2.getSelectedItem();
+				String s3 = labelMaiorOuIgual1.getText();
 				String s4 = (String) input.getText();
 				int news4 = Integer.parseInt(s4);
 				String s5 = (String) box5.getSelectedItem();
 				String s6 = (String) box3.getSelectedItem();
-				String s7 = (String) box4.getSelectedItem();
+				String s7 = labelMaiorOuIgual2.getText();
 				String s8 = (String) input2.getText();
 				int news8 = Integer.parseInt(s8);
 				if(s2 != null && s3 != null && s4 != null && s5 != null && s6 != null && s7 != null && s8 != null) {
@@ -152,6 +176,7 @@ public class Criar_Regra extends Observable{
 					pw.println(s1 + ", " +s2 + " " + s3 + " " + news4+ " " + s5 + " " +s6 + " " + s7 + " " + news8 + " ");
 					pw.close();
 					Regra regra = new Regra(s1,s2,s3,s5,s6,s7,news4,news8);
+					regras_carregadas.add(regra);
 					//TODO add regra to dropdown menu
 				}
 			}
@@ -185,16 +210,24 @@ public class Criar_Regra extends Observable{
 		// TODO Auto-generated method stub
 		mais_pressed = true;
 		if(times_button_was_clicked < 1) {
-			box3 = new JComboBox<String>(l);
-			box4 = new JComboBox<String>(l1);
+			box3 = new JComboBox<String>();
+			box3.addItem(filter((String)box1.getSelectedItem()));
+			labelMaiorOuIgual1 = new JLabel(">=");
 			input2 = new JTextField("Input a number");
 			input_panel.add(box3, BorderLayout.CENTER);
-			input_panel.add(box4, BorderLayout.CENTER);
+			input_panel.add(labelMaiorOuIgual1, BorderLayout.CENTER);
 			input_panel.add(input2, BorderLayout.CENTER);
 			panel.add(input_panel, BorderLayout.CENTER);
 			times_button_was_clicked++;
 		}
 		panel.updateUI();
+	}
+	
+	public String filter(String string){
+		if(string.equals("LOC")){
+			return "CYCLO";
+		}
+		return "LAA";
 	}
 
 	/**
@@ -203,12 +236,12 @@ public class Criar_Regra extends Observable{
 	private void addBoxes() {
 		
 		box1 = new JComboBox<String>(l);
-		box2 = new JComboBox<String>(l1);
+		labelMaiorOuIgual2 = new JLabel(">=", SwingConstants.CENTER);
 		box5 = new JComboBox<String>(l2);
 
 		input_panel.add(box1, BorderLayout.CENTER);
-		input_panel.add(box2, BorderLayout.CENTER);
-		
+		input_panel.add(labelMaiorOuIgual2, BorderLayout.CENTER);
+		 
 		panel.add(box5, BorderLayout.EAST);
 
 	}
@@ -230,6 +263,8 @@ public class Criar_Regra extends Observable{
 			@SuppressWarnings("resource")
 			Scanner scanner = new Scanner(file);
 			int line = 1;
+			if(!scanner.hasNext())
+				return;
 			while(scanner.hasNextLine()) {
 				String regra_raw = scanner.nextLine();
 				String[] regras_partes = regra_raw.split(",");
