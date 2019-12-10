@@ -96,8 +96,6 @@ public class JTableSample implements Observer {
 		panel.add(rulesBox);
 		panel.add(newColumn);
 
-		
-
 	}
 
 	private void open() {
@@ -109,8 +107,8 @@ public class JTableSample implements Observer {
 		mainFrame.setVisible(true);
 	}
 
-	public void addButtonsPMDandIPlasma(){
-		if (Avaliar_Defeitos.getJTables()[0] == this)  {
+	public void addButtonsPMDandIPlasma() {
+		if (Avaliar_Defeitos.getJTables()[0] == this) {
 			addIPlasma = new JButton("Add iPlasma");
 			addPMD = new JButton("Add PMD");
 
@@ -130,7 +128,7 @@ public class JTableSample implements Observer {
 			panel.add(addPMD);
 		}
 	}
-	
+
 	public JPanel getPanel() {
 		return panel;
 
@@ -213,6 +211,8 @@ public class JTableSample implements Observer {
 		if (numOfColumns <= MAX_NUM_COLUMNS) {
 			TableColumn colX = new TableColumn();
 			Regra regra = (Regra) rulesBox.getSelectedItem();
+			if (regra == null)
+				return;
 			Vector indicadores = new Vector();
 			indicadores = getRuleIndicators(regra);
 			colX.setHeaderValue(regra.toString());
@@ -407,17 +407,21 @@ public class JTableSample implements Observer {
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		Regra regra = (Regra) arg1;
-		if (Avaliar_Defeitos.getJTables()[0] == this) {
-			if (regra.getBox1().equals("LOC")) {
-				rulesBox.addItem(regra);
+		if (regra != null) {
+			if (Avaliar_Defeitos.getJTables()[0] == this) {
+				if (regra.getBox1().equals("LOC")) {
+					rulesBox.addItem(regra);
+				}
 			}
 		}
-		if(Avaliar_Defeitos.getJTables()[1] == this){
-			if(regra.getBox1().equals("ATFD")){
-				rulesBox.addItem(regra);
+		if (Avaliar_Defeitos.getJTables()[1] == this) {
+			if (regra != null) {
+				if (regra.getBox1().equals("ATFD")) {
+					rulesBox.addItem(regra);
+				}
 			}
 		}
-	
+
 	}
 
 	public void addRegraToComboBox(Regra regra) {
