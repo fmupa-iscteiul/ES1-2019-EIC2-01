@@ -26,7 +26,7 @@ class TestRegra {
 	@BeforeEach
 	void setUp() throws Exception {
 		regra1 = new Regra("Regra1", "LOC", ">=", "and","CYCLO" , ">=", 10, 20);
-		regra2 = new Regra("Regra2", "ATFD", ">=", "and","LAA" , "<=", 10, 20);
+		regra2 = new Regra("Regra2", "ATFD", ">=", "and","LAA" , "<=", 10, 20.0);
 	}
 
 	@AfterEach
@@ -75,7 +75,7 @@ class TestRegra {
 
 	@Test
 	final void testGetNumber2LAA() {
-		assertEquals(20, regra2.getNumber2());
+		assertEquals(20.0, regra2.getNumber2LAA());
 	}
 
 	@Test

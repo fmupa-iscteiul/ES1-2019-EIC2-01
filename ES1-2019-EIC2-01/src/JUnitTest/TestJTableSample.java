@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import auxAvaliarDefeitos.JTableSample;
+import projetoES1.Regra;
 
 class TestJTableSample {
 
@@ -17,36 +18,46 @@ class TestJTableSample {
 
 	@Test
 	final void testIsDCI() {
-		assertTrue(sample.isADCI(true, true));
+		assertTrue(sample.isDCI(true, true));
 		assertFalse(sample.isDCI(false, true));
 		assertFalse(sample.isDCI(true, false));
+		assertFalse(sample.isDCI(false, false));
 	}
 
 	@Test
 	final void testIsDII() {
-		assertTrue(sample.isADCI(true, true));
-		assertFalse(sample.isDCI(false, true));
-		assertFalse(sample.isDCI(true, false));
+		assertTrue(sample.isDII(false, true));
+		assertFalse(sample.isDII(false, false));
+		assertFalse(sample.isDII(true, false));
+		assertFalse(sample.isDII(true, true));
 	}
 
 	@Test
 	final void testIsADCI() {
-		fail("Not yet implemented"); // TODO
+		assertTrue(sample.isADCI(false, false));
+		assertFalse(sample.isADCI(false, true));
+		assertFalse(sample.isADCI(true, false));
+		assertFalse(sample.isADCI(true, true));
 	}
 
 	@Test
 	final void testIsADII() {
-		fail("Not yet implemented"); // TODO
+		assertTrue(sample.isADII(true, false));
+		assertFalse(sample.isADII(false, true));
+		assertFalse(sample.isADII(false, false));
+		assertFalse(sample.isADII(true, true));
 	}
 
 	@Test
 	final void testGetRuleEvaluationRegraIntInt() {
-		fail("Not yet implemented"); // TODO
+		Regra regra1 = new Regra("Regra1", "LOC", ">=", "AND","CYCLO" , ">=", 10, 20);
+		assertFalse(sample.getRuleEvaluation(regra1, 30, 40));
 	}
 
 	@Test
 	final void testGetRuleEvaluationRegraIntDouble() {
-		fail("Not yet implemented"); // TODO
+		Regra regra1 = new Regra("Regra1", "LOC", ">=", "AND","CYCLO" , ">=", 10, 20);
+		assertFalse(sample.getRuleEvaluation(regra1, 30, 40.0));
 	}
 
 }

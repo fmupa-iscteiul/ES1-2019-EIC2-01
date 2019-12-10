@@ -5,7 +5,7 @@ import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.runner.JUnitPlatform;
 
 @RunWith(JUnitPlatform.class)
-@SelectClasses({TestRegra.class})
+@SelectClasses({TestRegra.class,TestJTableSample.class})
 public class AllTests {
 	
 }

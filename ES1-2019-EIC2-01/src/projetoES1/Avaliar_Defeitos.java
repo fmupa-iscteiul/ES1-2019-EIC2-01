@@ -22,7 +22,7 @@ public class Avaliar_Defeitos {
 	private File path;
 	private LinkedList<Regra> lista_regras;
 	private static JTableSample[] jt;
-	private static JComboBox boxDefeitos;
+	private static JComboBox boxDefeitos= new JComboBox<>();
 	private JPanel panelDOWN;
 	private JPanel panelUP;
 
