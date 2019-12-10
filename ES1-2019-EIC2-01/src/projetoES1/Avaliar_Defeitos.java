@@ -43,6 +43,7 @@ public class Avaliar_Defeitos {
 		panelUP = new JPanel();
 		panelDOWN = new JPanel();
 
+		
 
 		// Texto antes de combobox com "is_long_method / is_feature_envy"
 		JLabel labelParametro = new JLabel("Parametro:");
