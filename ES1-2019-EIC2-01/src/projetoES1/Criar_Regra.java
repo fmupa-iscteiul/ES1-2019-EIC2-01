@@ -165,7 +165,6 @@ public class Criar_Regra extends Observable{
 					PrintWriter pw = new PrintWriter(new FileOutputStream(file, true));
 					pw.println(s1 + ", " +s2 + " " + s3 + " " + news4+ " ");
 					pw.close();
-					Regra regra = new Regra(s1,s2,s3,news4);
 					//TODO add regra to dropdown menu
 				}
 			} else {
@@ -315,10 +314,10 @@ public class Criar_Regra extends Observable{
 			if(!scanner.hasNext())
 				return;
 			while(scanner.hasNextLine()) {
-				
+
 				String regra_raw = scanner.nextLine();
 				String[] regras_partes = regra_raw.split(",");
-				
+
 				String nome = regras_partes[0];
 				String[] part2 = regras_partes[1].trim().split(" ");
 
@@ -326,25 +325,19 @@ public class Criar_Regra extends Observable{
 					String box1 = part2[0];
 					String box2 = part2[1];
 					int number  = Integer.parseInt(part2[2]);
-					
-					if(part2.length == 3) {
-						Regra regra = new Regra(nome, box1, box2, number);
-						regras_carregadas.add(regra);
+
+					String box4 = part2[3];
+					String box5 = part2[4];
+					String box6 = part2[5];
+					Regra regra;
+					if(box4.equals("CYCLO")){
+						int number2  = Integer.parseInt(part2[6]);
+						regra = new Regra(nome, box1, box2, box4, box5, box6, number, number2);
+					}else{
+						double number2 = Double.parseDouble(part2[6]);
+						regra = new Regra(nome, box1, box2, box4, box5, box6, number, number2);
 					}
-					else if(part2.length == 7) {
-						String box4 = part2[3];
-						String box5 = part2[4];
-						String box6 = part2[5];
-						Regra regra;
-						if(box4.equals("CYCLO")){
-							int number2  = Integer.parseInt(part2[6]);
-							regra = new Regra(nome, box1, box2, box4, box5, box6, number, number2);
-						}else{
-							double number2 = Double.parseDouble(part2[6]);
-							regra = new Regra(nome, box1, box2, box4, box5, box6, number, number2);
-						}
-						regras_carregadas.add(regra);
-					}
+					regras_carregadas.add(regra);
 				}
 				else {
 					JOptionPane.showMessageDialog(panel, "There is a problem with rule on the line:"+line+", please correct it");
