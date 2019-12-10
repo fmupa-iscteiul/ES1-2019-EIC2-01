@@ -62,6 +62,11 @@ public class Criar_Regra extends Observable{
 		init();
 	}
 
+	
+	/**
+	 * Inicia a interface gráfica através da qual o utilizador pode adicionar regras
+	 */
+	
 	private void init() {
 		regras_carregadas = new LinkedList<Regra>();
 
@@ -202,7 +207,12 @@ public class Criar_Regra extends Observable{
 		}
 		
 	}
-
+	
+	/**
+	 * Este metodo permite carregar o ficheiro com regras quando o programa é lançado
+	 * Se o ficheiro com regras não existir (no caso do 1º lançamento ou no caso do utilizador apagar o ficheiro)
+	 * será criado um novo ficheiro onde que vão ser guardadas as regras
+	 */
 	private void loadRulesOnStart() {
 		File file = new File("regras.txt");
 		if(!file.exists()) {
@@ -258,7 +268,12 @@ public class Criar_Regra extends Observable{
 		panel.add(box5, BorderLayout.EAST);
 
 	}
-
+	
+	
+	/**
+	 * Este metodo serve para o caso em que o utilizador desejar carregar o seu próprio ficheiro com regras
+	 * Aparece um pop-up através do qual é possível escolher o ficheiro do utilizador
+	 */
 	protected void loadTheRules() {
 		
 		JFileChooser file = new JFileChooser(".");
@@ -270,6 +285,14 @@ public class Criar_Regra extends Observable{
 		}
 		
 	}
+	
+	/**
+	 * 
+	 * Este metodo serve para ler o ficheiro e é usado de 2 formas
+	 * -O ficheiro é lido quando a aplicação é lançada
+	 * -O ficheiro é lido no caso do utilizador desejar carregar o seu próprio ficheiro com regras
+	 * @param file, este file é que é lido por este metodo
+	 */
 
 	private void readFile(File file) {
 		try {
@@ -355,6 +378,11 @@ public class Criar_Regra extends Observable{
 	public JPanel getPanel1() {
 		return input_panel;
 	}
+	
+	/**
+	 * Atualiza a lista de regras e notifica o Observer para fazer update na interface gráfica do JTableSample
+	 * @param regra, é a regra que acabou de ser criada e guardada pelo utilizador
+	 */
 
 	public void addRegra(Regra regra) {
 		regras_carregadas.add(regra);
@@ -362,8 +390,12 @@ public class Criar_Regra extends Observable{
 		notifyObservers();
 	}
 	
+	/**
+	 * Este metodo serve para devolver a lista de regras que foram carregadas
+	 * @return regras_carregadas
+	 */
+	
 	public LinkedList<Regra> getRegras_carregadas() {
-		
 		return regras_carregadas;
 	}
 	
