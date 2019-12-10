@@ -62,6 +62,11 @@ public class Criar_Regra extends Observable{
 		init();
 	}
 
+	
+	/**
+	 * Inicia a interface gráfica através da qual o utilizador pode adicionar regras
+	 */
+	
 	private void init() {
 		regras_carregadas = new LinkedList<Regra>();
 
@@ -139,6 +144,10 @@ public class Criar_Regra extends Observable{
 		});
 	}
 	
+	/**
+	 * Este método permite criar um ficheiro na pasta do repositório se o ficheiro ainda não existir,
+	 * e com esse ficheiro vamos conseguir guardar as regras com as métricas dadas
+	 */
 	protected void saveRules() {
 		try {
 			File file = new File("regras.txt");
@@ -156,7 +165,6 @@ public class Criar_Regra extends Observable{
 					PrintWriter pw = new PrintWriter(new FileOutputStream(file, true));
 					pw.println(s1 + ", " +s2 + " " + s3 + " " + news4+ " ");
 					pw.close();
-					Regra regra = new Regra(s1,s2,s3,news4);
 					//TODO add regra to dropdown menu
 				}
 			} else {
@@ -202,7 +210,12 @@ public class Criar_Regra extends Observable{
 		}
 		
 	}
-
+	
+	/**
+	 * Este metodo permite carregar o ficheiro com regras quando o programa é lançado
+	 * Se o ficheiro com regras não existir (no caso do 1º lançamento ou no caso do utilizador apagar o ficheiro)
+	 * será criado um novo ficheiro onde que vão ser guardadas as regras
+	 */
 	private void loadRulesOnStart() {
 		File file = new File("regras.txt");
 		if(!file.exists()) {
@@ -219,6 +232,9 @@ public class Criar_Regra extends Observable{
 		}
 	}
 	
+	/**
+	 * Este método permite adicionar mais combo boxes ao painel
+	 */
 	protected void moreBoxes() {
 		// TODO Auto-generated method stub
 		mais_pressed = true;
@@ -236,6 +252,12 @@ public class Criar_Regra extends Observable{
 		panel.updateUI();
 	}
 	
+	/**
+	 * Este método permite dizer se a string for igual ao LOC ele returna a métrica CYCLO 
+	 * e se não for igual returna métrica LAA 
+	 * @param string
+	 * @return
+	 */
 	public String filter(String string){
 		if(string.equals("LOC")){
 			return "CYCLO";
@@ -258,7 +280,12 @@ public class Criar_Regra extends Observable{
 		panel.add(box5, BorderLayout.EAST);
 
 	}
-
+	
+	
+	/**
+	 * Este metodo serve para o caso em que o utilizador desejar carregar o seu próprio ficheiro com regras
+	 * Aparece um pop-up através do qual é possível escolher o ficheiro do utilizador
+	 */
 	protected void loadTheRules() {
 		
 		JFileChooser file = new JFileChooser(".");
@@ -270,6 +297,14 @@ public class Criar_Regra extends Observable{
 		}
 		
 	}
+	
+	/**
+	 * 
+	 * Este metodo serve para ler o ficheiro e é usado de 2 formas
+	 * -O ficheiro é lido quando a aplicação é lançada
+	 * -O ficheiro é lido no caso do utilizador desejar carregar o seu próprio ficheiro com regras
+	 * @param file, este file é que é lido por este metodo
+	 */
 
 	private void readFile(File file) {
 		try {
@@ -279,10 +314,10 @@ public class Criar_Regra extends Observable{
 			if(!scanner.hasNext())
 				return;
 			while(scanner.hasNextLine()) {
-				
+
 				String regra_raw = scanner.nextLine();
 				String[] regras_partes = regra_raw.split(",");
-				
+
 				String nome = regras_partes[0];
 				String[] part2 = regras_partes[1].trim().split(" ");
 
@@ -290,25 +325,19 @@ public class Criar_Regra extends Observable{
 					String box1 = part2[0];
 					String box2 = part2[1];
 					int number  = Integer.parseInt(part2[2]);
-					
-					if(part2.length == 3) {
-						Regra regra = new Regra(nome, box1, box2, number);
-						regras_carregadas.add(regra);
+
+					String box4 = part2[3];
+					String box5 = part2[4];
+					String box6 = part2[5];
+					Regra regra;
+					if(box4.equals("CYCLO")){
+						int number2  = Integer.parseInt(part2[6]);
+						regra = new Regra(nome, box1, box2, box4, box5, box6, number, number2);
+					}else{
+						double number2 = Double.parseDouble(part2[6]);
+						regra = new Regra(nome, box1, box2, box4, box5, box6, number, number2);
 					}
-					else if(part2.length == 7) {
-						String box4 = part2[3];
-						String box5 = part2[4];
-						String box6 = part2[5];
-						Regra regra;
-						if(box4.equals("CYCLO")){
-							int number2  = Integer.parseInt(part2[6]);
-							regra = new Regra(nome, box1, box2, box4, box5, box6, number, number2);
-						}else{
-							double number2 = Double.parseDouble(part2[6]);
-							regra = new Regra(nome, box1, box2, box4, box5, box6, number, number2);
-						}
-						regras_carregadas.add(regra);
-					}
+					regras_carregadas.add(regra);
 				}
 				else {
 					JOptionPane.showMessageDialog(panel, "There is a problem with rule on the line:"+line+", please correct it");
@@ -355,6 +384,11 @@ public class Criar_Regra extends Observable{
 	public JPanel getPanel1() {
 		return input_panel;
 	}
+	
+	/**
+	 * Atualiza a lista de regras e notifica o Observer para fazer update na interface gráfica do JTableSample
+	 * @param regra, é a regra que acabou de ser criada e guardada pelo utilizador
+	 */
 
 	public void addRegra(Regra regra) {
 		regras_carregadas.add(regra);
@@ -362,8 +396,12 @@ public class Criar_Regra extends Observable{
 		notifyObservers();
 	}
 	
+	/**
+	 * Este metodo serve para devolver a lista de regras que foram carregadas
+	 * @return regras_carregadas
+	 */
+	
 	public LinkedList<Regra> getRegras_carregadas() {
-		
 		return regras_carregadas;
 	}
 	
