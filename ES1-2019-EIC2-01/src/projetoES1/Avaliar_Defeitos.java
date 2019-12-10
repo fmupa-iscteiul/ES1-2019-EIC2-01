@@ -31,10 +31,16 @@ public class Avaliar_Defeitos {
 		path = App.file;
 	}
 
-	private void showErrorMessage() {
-		panel = new JPanel();
-		JOptionPane.showMessageDialog(panel, "Ficheiro não selecionado.", "Erro", JOptionPane.ERROR_MESSAGE);
-	}
+	
+	/**
+	 * Inicializa o painel principal (panel),
+	 * o painel superior (panelUP), 
+	 * e o painel inferior (panelDOWN),
+	 * inicializa combobox com os defeitos (is_long_method, is_feature_envy)
+	 * inicializa as tabelas para cada defeito,
+	 * e adiciona os paineis superior e inferior ao painel principal
+	 * 
+	 */
 
 	private void init() {
 		panel = new JPanel();
@@ -81,18 +87,20 @@ public class Avaliar_Defeitos {
 
 	}
 
+	/**
+	 * retorna uma tabela dado um indice
+	 * @param index
+	 * @return
+	 */
 	public JTableSample getJTableSample(int index) {
 		return jt[index];
 	}
-
-	private void comparar() {
-		if (path == null) {
-			showErrorMessage();
-			return;
-		}
-
-	}
 	
+	/**
+	 * Muda de tabela consoante o defeito selecionado
+	 * removendo os compentes do painel
+	 * e adicionando a tabela nova
+	 */
 	private void changeTable() {
 		if(boxDefeitos.getSelectedItem() == "is_long_method"){
 			panelDOWN.removeAll();
@@ -118,8 +126,11 @@ public class Avaliar_Defeitos {
 		return panel;
 	}
 
-	/*
-	 * public void addRegra(Regra regra) { lista_regras.add(regra); }
+	/**
+	 * Escolhe em que combobox adicionar as regras
+	 * jt[0] -> is_long_method
+	 * jt[1] -> is_feature_envy
+	 * @param regras
 	 */
 	public void setRegras(LinkedList<Regra> regras) {
 		for(Regra r: regras){
@@ -130,10 +141,18 @@ public class Avaliar_Defeitos {
 		}
 	}
 
+	/**
+	 * retorna a combobox com os defeitos
+	 * @return
+	 */
 	public static JComboBox getBoxDefeitos() {
 		return boxDefeitos;
 	}
 	
+	/**
+	 * retorna o vetor com as duas tabelas 
+	 * @return
+	 */
 	public static JTableSample[] getJTables(){
 		return jt;
 	}

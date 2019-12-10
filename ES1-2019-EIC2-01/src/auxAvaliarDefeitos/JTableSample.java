@@ -48,24 +48,15 @@ public class JTableSample implements Observer {
 	public int counter = 1;
 
 	public JTableSample() {
-		// COMO ADICIONAR LINHAS
-
-		/*
-		 * addButton = new JButton("Add"); deleteButton = new JButton("Delete");
-		 * 
-		 * addButton.addActionListener(new ActionListener() { public void
-		 * actionPerformed(ActionEvent e) { Vector rowData = null;
-		 * defaultTableModel.addRow(rowData); table.validate(); } });
-		 * 
-		 * deleteButton.addActionListener(new ActionListener() { public void
-		 * actionPerformed(ActionEvent e) { Vector rowData = null; int rowCount
-		 * = defaultTableModel.getRowCount(); if(rowCount>0) {
-		 * defaultTableModel.removeRow(rowCount-1); table.validate(); } } });
-		 */
 		initTable();
-
 	}
 
+	
+	/**
+	 * inicializa a jtable, jscrollpane e defaulttablemodel
+	 * adiciona uma coluna à tabela com os indicadores DCI,DII,ADCI,ADII
+	 * e cria um botão "add column"
+	 */
 	public void initTable() {
 		mainFrame = new JFrame("JTableSample");
 		numOfColumns = 1;
@@ -98,6 +89,9 @@ public class JTableSample implements Observer {
 
 	}
 
+	/**
+	 * inicializa a frame
+	 */
 	private void open() {
 		mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		mainFrame.add(scrollPane, BorderLayout.CENTER);
@@ -107,6 +101,12 @@ public class JTableSample implements Observer {
 		mainFrame.setVisible(true);
 	}
 
+	/**
+	 * Caso seja a tabela do defeito is_long_method
+	 * adiciona os botoes PMD e iPlasma
+	 * que permitem adicionar uma coluna à tabela com os 
+	 * respetivos parametros
+	 */
 	public void addButtonsPMDandIPlasma() {
 		if (Avaliar_Defeitos.getJTables()[0] == this) {
 			addIPlasma = new JButton("Add iPlasma");
@@ -134,6 +134,13 @@ public class JTableSample implements Observer {
 
 	}
 
+	/**
+	 * funcao que decide qual das apps comparar
+	 * PMD se parametro nome = PMD
+	 * iPlasma se parametro nome = iPlasma
+	 * e adiciona à tabela
+	 * @param nome
+	 */
 	public void addPMDorIPlasma(String nome) {
 		if (App.file == null) {
 			JOptionPane.showMessageDialog(panel, "File not loaded");
@@ -203,6 +210,12 @@ public class JTableSample implements Observer {
 		return mainFrame;
 	}
 
+	/**
+	 * Verifica qual a regra selecionada na combobox 
+	 * e compara essa regra.
+	 * adiciona uma coluna à tabela
+	 * com os valores obtidos na comparação
+	 */
 	public void addTableColumn() {
 		if (App.file == null) {
 			JOptionPane.showMessageDialog(panel, "File not loaded");
@@ -223,6 +236,14 @@ public class JTableSample implements Observer {
 
 	}
 
+	/**
+	 * lê ficheiro 
+	 * recebe uma regra e devolve o vetor
+	 * com os valores dos parametros para essa regra
+	 * 
+	 * @param regra
+	 * @return
+	 */
 	public Vector getRuleIndicators(Regra regra) {
 		Vector indicadores = new Vector();
 		// Deixa a primeira celula em branco
@@ -297,6 +318,10 @@ public class JTableSample implements Observer {
 		return indicadores;
 	}
 
+	/**
+	 *	incrementa contadores do vetor 
+	 *dependendo dos seus defeitos
+	 */
 	public Vector comparaRealComRegra(Vector v, boolean real, boolean regra) {
 		// 1 - DCI
 		// 2 - DII
@@ -318,30 +343,63 @@ public class JTableSample implements Observer {
 		return v;
 	}
 
+	/**
+	 * decide se é DCI consoante os valores booleanos real e regra 
+	 * @param real
+	 * @param regra
+	 * @return
+	 */
 	public boolean isDCI(boolean real, boolean regra) {
 		if (real && regra)
 			return true;
 		return false;
 	}
 
+	/**
+	 * decide se é DII consoante os valores booleanos real e regra 
+	 * @param real
+	 * @param regra
+	 * @return
+	 */
 	public boolean isDII(boolean real, boolean regra) {
 		if (!real && regra)
 			return true;
 		return false;
 	}
 
+	/**
+	 * decide se é ADCI consoante os valores booleanos real e regra 
+	 * @param real
+	 * @param regra
+	 * @return
+	 */
 	public boolean isADCI(boolean real, boolean regra) {
 		if (!real && !regra)
 			return true;
 		return false;
 	}
 
+	/**
+	 * decide se é ADII consoante os valores booleanos real e regra 
+	 * @param real
+	 * @param regra
+	 * @return
+	 */
 	public boolean isADII(boolean real, boolean regra) {
 		if (real && !regra)
 			return true;
 		return false;
 	}
 
+	
+	/**
+	 * ao receber a regra LOC, e os dois valores lidos do ficheiro
+	 * decide se a regra acertou ou não
+	 * @param regra
+	 * @param a
+	 * @param b
+	 * @return
+	 */
 	public boolean getRuleEvaluation(Regra regra, int a, int b) {
 		if (Avaliar_Defeitos.getBoxDefeitos().getSelectedItem() == "is_long_method") {
 			if (regra.getAnd_Or().equals("AND")) {
@@ -368,6 +426,14 @@ public class JTableSample implements Observer {
 
 	}
 
+	/**
+	 * ao receber a regra ATFD, e os dois valores lidos do ficheiro
+	 * decide se a regra acertou ou não
+	 * @param regra
+	 * @param a
+	 * @param b
+	 * @return
+	 */
 	public boolean getRuleEvaluation(Regra regra, int a, double b) {
 		if (Avaliar_Defeitos.getBoxDefeitos().getSelectedItem() == "is_feature_envy") {
 			if (regra.getAnd_Or().equals("AND")) {
@@ -404,6 +470,10 @@ public class JTableSample implements Observer {
 		});
 	}
 
+	/**
+	 * fica à espera de regras criadas
+	 * se uma nova regra for criada adiciona à combobox da tabela correspondente
+	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		Regra regra = (Regra) arg1;
@@ -424,6 +494,10 @@ public class JTableSample implements Observer {
 
 	}
 
+	/**
+	 * adiciona uma regra à combobox 
+	 * @param regra
+	 */
 	public void addRegraToComboBox(Regra regra) {
 		rulesBox.addItem(regra);
 	}
