@@ -160,17 +160,23 @@ public class Criar_Regra extends Observable{
 					//TODO add regra to dropdown menu
 				}
 			} else {
-				System.out.println("Save Rules");
+
 				String s1 = rule_name.getText();
 				String s2 = (String) box1.getSelectedItem();
 				String s3 = labelMaiorOuIgual2.getText();
 				String s4 = (String) input.getText();
-				int news4 = Integer.parseInt(s4);
 				String s5 = (String) box5.getSelectedItem();
 				String s6 = (String) box3.getSelectedItem();
 				String s7 = labelMaiorOuIgual1.getText();
 				String s8 = (String) input2.getText();
+<<<<<<< HEAD
 				double news8 = Double.parseDouble(s8);
+=======
+
+				int news4 = Integer.parseInt(s4);
+				int news8 = Integer.parseInt(s8);
+				
+>>>>>>> branch 'master' of https://github.com/fmupa-iscteiul/ES1-2019-EIC2-01.git
 				if(s2 != null && s3 != null && s4 != null && s5 != null && s6 != null && s7 != null && s8 != null) {
 					PrintWriter pw = new PrintWriter(new FileOutputStream(file, true));
 					pw.println(s1 + ", " +s2 + " " + s3 + " " + news4+ " " + s5 + " " +s6 + " " + s7 + " " + news8 + " ");
@@ -187,6 +193,8 @@ public class Criar_Regra extends Observable{
 						notifyObservers(regra);
 					}
 					regras_carregadas.add(regra);
+					addRegra(regra);
+					panel.updateUI();
 					//TODO add regra to dropdown menu
 				}
 			}
@@ -276,15 +284,18 @@ public class Criar_Regra extends Observable{
 			if(!scanner.hasNext())
 				return;
 			while(scanner.hasNextLine()) {
+				
 				String regra_raw = scanner.nextLine();
 				String[] regras_partes = regra_raw.split(",");
 				
 				String nome = regras_partes[0];
 				String[] part2 = regras_partes[1].trim().split(" ");
-				if(part2.length == 3 || part2.length == 7) {
+
+				if(part2.length == 7) {
 					String box1 = part2[0];
 					String box2 = part2[1];
 					int number  = Integer.parseInt(part2[2]);
+<<<<<<< HEAD
 					
 					if(part2.length == 3) {
 						Regra regra = new Regra(nome, box1, box2, number);
@@ -304,6 +315,14 @@ public class Criar_Regra extends Observable{
 						}
 						regras_carregadas.add(regra);
 					}
+=======
+					String box4 = part2[3];
+					String box5 = part2[4];
+					String box6 = part2[5];
+					int number2  = Integer.parseInt(part2[6]);
+					Regra regra = new Regra(nome, box1, box2, box4, box5, box6, number, number2);
+					regras_carregadas.add(regra);
+>>>>>>> branch 'master' of https://github.com/fmupa-iscteiul/ES1-2019-EIC2-01.git
 					line++;
 				}
 				else {
@@ -352,6 +371,12 @@ public class Criar_Regra extends Observable{
 		return input_panel;
 	}
 
+	public void addRegra(Regra regra) {
+		regras_carregadas.add(regra);
+		setChanged();
+		notifyObservers();
+	}
+	
 	public LinkedList<Regra> getRegras_carregadas() {
 		
 		return regras_carregadas;
