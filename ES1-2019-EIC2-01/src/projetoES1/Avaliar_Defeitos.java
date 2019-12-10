@@ -43,10 +43,7 @@ public class Avaliar_Defeitos {
 		panelUP = new JPanel();
 		panelDOWN = new JPanel();
 
-		// Tabela
-		jt = new JTableSample[2];
-		jt[0] = new JTableSample();
-		jt[1] = new JTableSample();
+		
 
 		// Texto antes de combobox com "is_long_method / is_feature_envy"
 		JLabel labelParametro = new JLabel("Parametro:");
@@ -55,7 +52,11 @@ public class Avaliar_Defeitos {
 		String[] lista_defeitos = { "is_long_method", "is_feature_envy" };
 		boxDefeitos = new JComboBox(lista_defeitos);
 
-		
+		// Tabela
+		jt = new JTableSample[2];
+		jt[0] = new JTableSample();
+		jt[0].addButtonsPMDandIPlasma();
+		jt[1] = new JTableSample();
 
 		boxDefeitos.setSize(100, 100);
 		
