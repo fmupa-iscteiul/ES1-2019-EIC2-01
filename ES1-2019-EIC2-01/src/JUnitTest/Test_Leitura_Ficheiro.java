@@ -28,5 +28,11 @@ class Test_Leitura_Ficheiro {
 		JPanel panel = lf.getPanel();
 		assertEquals(panel, lf.getPanel());
 	}
+	
+	@Test
+	final void testremoveAllLine() {
+		
+		assertEquals(true, lf.removeAllLine());
+	}
 
 }

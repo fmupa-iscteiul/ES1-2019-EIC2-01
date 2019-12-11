@@ -113,10 +113,14 @@ public class Leitura_Ficheiro {
 	/**
 	 * Apaga as linhas da tabela 
 	 */
-	private void removeAllLine() {
+	public boolean removeAllLine() {
 		DefaultTableModel model = (DefaultTableModel) tabela.getModel();
-		for(int i =model.getRowCount() -1; i>= 0; i--)
+		int i;
+		for( i =model.getRowCount() -1; i>= 0; i--)
 			model.removeRow(i);
+		if(i < 0)
+			return true;
+		return false;
 	}
 	
 	/**return the panel name don´t touch **/
